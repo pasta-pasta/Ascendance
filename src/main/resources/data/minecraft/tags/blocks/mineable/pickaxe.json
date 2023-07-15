@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "ascendance:nanocolony",
+    "ascendance:guardcolonyblock",
+    "ascendance:aggressivecolonyblock"
+  ]
+}

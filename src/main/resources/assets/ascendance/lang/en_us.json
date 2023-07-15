@@ -1,0 +1,39 @@
+{
+  "itemGroup.asctab": "Ascendance to Carnage",
+
+  "item.ascendance.spear": "§4Spear of Longinus",
+
+  "item.ascendance.meralium_helmet": "§7Meralium Helmet",
+
+  "item.ascendance.meralium_chestplate": "§7Meralium Chestplate",
+
+  "item.ascendance.meralium_leggins": "§7Meralium Leggins",
+
+  "item.ascendance.meralium_boots": "§7Meralium Boots",
+
+  "item.ascendance.meralium_ingot": "§7Meralium Colony",
+
+  "item.ascendance.nanobreaker": "§6The Nanobreaker",
+
+  "block.ascendance.nanocolony": "Nanite colony",
+
+  "block.ascendance.guardcolonyblock": "§9Guard nanite colony",
+
+  "block.ascendance.aggressivecolonyblock": "§cAggressive nanite colony",
+
+  "item.ascendance.small_colony": "§7Small nanite colony",
+
+  "item.ascendance.aggressive_colony": "§cAggressive small nanite colony",
+
+  "item.ascendance.guard_colony": "§9Guard small nanite colony",
+
+  "item.ascendance.nanite_extractor": "§3Nanite Extractor",
+
+  "item.ascendance.empty_injection": "Empty injection",
+
+  "item.ascendance.sleeping_injection": "Sleeping injection",
+
+  "death.attack.spear": "%1$s was erased from the narrative",
+
+  "death.attack.nanites": "%1$s was eaten by nanites"
+}
