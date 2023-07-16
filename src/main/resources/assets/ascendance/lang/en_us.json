@@ -23,6 +23,8 @@
 
   "item.ascendance.small_colony": "§7Small nanite colony",
 
+  "item.ascendance.nanite_killer": "§4Nanite killer",
+
   "item.ascendance.aggressive_colony": "§cAggressive small nanite colony",
 
   "item.ascendance.guard_colony": "§9Guard small nanite colony",
@@ -35,5 +37,5 @@
 
   "death.attack.spear": "%1$s was erased from the narrative",
 
-  "death.attack.nanites": "%1$s was eaten by nanites"
+  "death.attack.nanites": "%1$s was eaten by nanites. §c You've been warned."
 }

@@ -24,7 +24,7 @@ public class GuardColony extends NanoColony{
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (level.isClientSide || isStable) return; // Only do this on the server side
 
-        if (rand.nextFloat()>0.95){
+        if (rand.nextInt(1000)>995){
             Direction[] directions = Direction.values();
 
 
@@ -35,7 +35,7 @@ public class GuardColony extends NanoColony{
             BlockState targetState = level.getBlockState(targetPos);
             Block targetBlock = targetState.getBlock();
 
-            if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get()) {
+            if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get() && targetBlock != BlockRegger.NANITE_DOOR.get()) {
 
                 level.setBlock(targetPos, state, 3);
             }

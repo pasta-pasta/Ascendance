@@ -22,7 +22,6 @@ import java.util.Objects;
 
 public class NanoInjectorScreen extends AbstractContainerScreen<NanoInjectorMenu> {
 
-    private ExtendedButton beanButton;
     private static final ResourceLocation TEXTURE = new ResourceLocation(Ascendance.MOD_ID, "textures/gui/nanoinjector.png");
 
     public NanoInjectorScreen(NanoInjectorMenu menu, Inventory playerInv, Component title){
@@ -39,11 +38,27 @@ public class NanoInjectorScreen extends AbstractContainerScreen<NanoInjectorMenu
         int y = (height - imageHeight) / 2;
 
         this.blit(stack, x, y, 0, 0, imageWidth, imageHeight);
+
+        blit(stack,x+55, y+76 - menu.getScaledFuel(), 215, 0, 16, menu.getScaledFuel());
+        renderProgressArrow(stack, x, y);
+        renderBurningProgres(stack, x, y);
+    }
+
+    private void renderProgressArrow(PoseStack poseStack, int x, int y){
+        if (menu.isCrafting()){
+            blit(poseStack,x+105, y+33, 176, 0, 8, menu.getScaledProgress());
+        }
+    }
+
+    private void renderBurningProgres(PoseStack poseStack, int x, int y){
+        if (menu.isBurning()){
+            blit(poseStack,x+25, y+58 - menu.getScaledBurning(), 189, 0, 18, menu.getScaledBurning());
+        }
     }
 
     @Override
     protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
-        drawString(stack,font,title, 6,5, 0xc0c0c0);
+
     }
 
     @Override
@@ -56,8 +71,5 @@ public class NanoInjectorScreen extends AbstractContainerScreen<NanoInjectorMenu
     @Override
     protected void init() {
         super.init();
-        this.beanButton = addRenderableWidget(new ExtendedButton(this.leftPos+47, this.topPos+60, 72, 18, Component.literal("Inject"), btn -> {
-            Objects.requireNonNull(Minecraft.getInstance().player).displayClientMessage(Component.literal("beans. what did you expect?"), false);
-        }));
     }
 }

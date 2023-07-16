@@ -1,0 +1,14 @@
+{
+  "type": "ascendance:nanoinjector_recipe",
+  "ingredients": [
+    {
+      "item": "ascendance:aggressive_colony"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "output": {
+    "item": "ascendance:aggressivecolony_item"
+  }
+}

@@ -8,32 +8,41 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.item.GeoArmorItem;
 
-import java.util.HashMap;
-import java.util.Map;
+public class MeraliumArmorGecko extends GeoArmorItem implements IAnimatable {
 
-public class MeraliumChestplate extends ArmorItem {
-
-    private static final Map<Player, Vec3> lastPosition = new HashMap<>();
-
-    public MeraliumChestplate(ArmorMaterial material, EquipmentSlot slot) {
+    private AnimationFactory factory = new AnimationFactory(this);
+    public MeraliumArmorGecko(ArmorMaterial material, EquipmentSlot slot) {
         super(material, slot, new Properties().tab(ASCTab.instance));
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        if (slot == EquipmentSlot.LEGS) {
-            return "ascendance:textures/models/armor/meralium_layer_2.png";
-        } else {
-            // This applies for the helmet, chestplate and boots
-            return "ascendance:textures/models/armor/meralium_layer_1.png";
-        }
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<MeraliumArmorGecko>(this, "controller", 20, this::predicate));
     }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
+
+    private <P extends IAnimatable>PlayState predicate(AnimationEvent<P> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        return PlayState.CONTINUE;
+    }
+
 
     public static boolean checkFullSet(Player player){
         return  player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegger.MERALIUM_HELMET.get() &&
@@ -51,28 +60,17 @@ public class MeraliumChestplate extends ArmorItem {
                 AttributeInstance maxHealthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
                 flyingSpeedAttribute = player.getAttribute(Attributes.FLYING_SPEED);
                 walkingSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
-                Vec3 playerPos = player.position();
+
 
                 if (maxHealthAttribute != null) {
                     maxHealthAttribute.setBaseValue(maxHealthAttribute.getAttribute().getDefaultValue() * 4);
                     player.setHealth((float) maxHealthAttribute.getValue());
                 }
-                // if (player.getAbilities().flying){
-                // if (!ASCKeySubscriber.isPlayerMoving()) {
-                //     Vec3 lastPos = lastPosition.get(player);
-                //    if (lastPos != null && (playerPos.x != lastPos.x || playerPos.y != lastPos.y || playerPos.z != lastPos.z)){
-                //        ASCServerSideHandler.sendToServer(new IsMovingC2SPacket(lastPos));
-                //      }
-            //}
-            //  else{
-            //      lastPosition.put(player, player.position());
-            //  }
-            // }
                 if (flyingSpeedAttribute != null) {
                     flyingSpeedAttribute.setBaseValue(1.2F);
                 }
                 if (walkingSpeedAttribute != null) {
-                    walkingSpeedAttribute.setBaseValue(walkingSpeedAttribute.getAttribute().getDefaultValue() * 1.5);
+                    //walkingSpeedAttribute.setBaseValue(walkingSpeedAttribute.getAttribute().getDefaultValue() * 1.5);
                 }
 
 
@@ -83,8 +81,7 @@ public class MeraliumChestplate extends ArmorItem {
                     serverPlayer.onUpdateAbilities(); // sends the updated abilities to the client
                 }
 
-        }
+            }
         }
     }
-
 }

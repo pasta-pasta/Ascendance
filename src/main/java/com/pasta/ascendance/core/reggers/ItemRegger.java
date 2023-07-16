@@ -31,7 +31,7 @@ public class ItemRegger {
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
     public static final RegistryObject<Item> SLEEPING_INJECTION = ITEMS.register("sleeping_injection",
-            () -> new SleepingInjection(new Item.Properties().tab(ASCTab.instance)));
+            () -> new SleepingInjection(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(1000)));
 
     public static final RegistryObject<Item> SMALLCOLONY = ITEMS.register("small_colony",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
@@ -42,20 +42,29 @@ public class ItemRegger {
     public static final RegistryObject<Item> NANITE_EXTRACTOR = ITEMS.register("nanite_extractor",
             () -> new Item(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(100)));
 
+    public static final RegistryObject<Item> ACIDIC_SUBSTATION = ITEMS.register("acid",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> NUTRIENT_MEDIUM = ITEMS.register("nutrient_medium",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> NANITE_KILLER = ITEMS.register("nanite_killer",
+            () -> new NaniteKiller(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
     public static final RegistryObject<Item> MERALIUM_HELMET = ITEMS.register("meralium_helmet", () ->
-            new MeraliumHelmet(Meralium.MERALIUM, EquipmentSlot.HEAD)
+            new MeraliumArmorGecko(Meralium.MERALIUM, EquipmentSlot.HEAD)
     );
 
     public static final RegistryObject<Item> MERALIUM_CHESTPLATE = ITEMS.register("meralium_chestplate", () ->
-            new MeraliumChestplate(Meralium.MERALIUM, EquipmentSlot.CHEST)
+            new MeraliumArmorGecko(Meralium.MERALIUM, EquipmentSlot.CHEST)
     );
 
     public static final RegistryObject<Item> MERALIUM_LEGGINS = ITEMS.register("meralium_leggins", () ->
-            new MeraliumLeggins(Meralium.MERALIUM, EquipmentSlot.LEGS)
+            new MeraliumArmorGecko(Meralium.MERALIUM, EquipmentSlot.LEGS)
     );
 
     public static final RegistryObject<Item> MERALIUM_BOOTS = ITEMS.register("meralium_boots", () ->
-            new MeraliumBoots(Meralium.MERALIUM, EquipmentSlot.FEET)
+            new MeraliumArmorGecko(Meralium.MERALIUM, EquipmentSlot.FEET)
     );
 
     public static final RegistryObject<Item> NANOBREAKER = ITEMS.register("nanobreaker", () ->
@@ -63,6 +72,10 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> NANOCOLONY_ITEM = ITEMS.register("nanocolony_item", () ->
             new BlockItem(NANOCOLONY.get(), new Item.Properties().tab(ASCTab.instance))
+    );
+
+    public static final RegistryObject<Item> NANITE_DOOR_ITEM = ITEMS.register("nanite_door_item", () ->
+            new BlockItem(NANITE_DOOR.get(), new Item.Properties().tab(ASCTab.instance))
     );
 
     public static final RegistryObject<Item> GUARDCOLONY_ITEM = ITEMS.register("guardcolony_item", () ->

@@ -1,0 +1,14 @@
+{
+  "type": "ascendance:nanoinjector_recipe",
+  "ingredients": [
+    {
+      "item": "ascendance:small_colony"
+    },
+    {
+      "item": "minecraft:lava_bucket"
+    }
+  ],
+  "output": {
+    "item": "ascendance:aggressive_colony"
+  }
+}

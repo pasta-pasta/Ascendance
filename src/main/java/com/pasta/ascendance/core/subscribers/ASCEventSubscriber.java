@@ -2,23 +2,15 @@ package com.pasta.ascendance.core.subscribers;
 
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfectionProvider;
+import com.pasta.ascendance.client.armor.MeraliumArmorRenderer;
 import com.pasta.ascendance.client.hud.InfectionHudOverlay;
-import com.pasta.ascendance.core.reggers.BlockRegger;
 import com.pasta.ascendance.core.reggers.ItemRegger;
-import com.pasta.ascendance.core.reggers.ParticleRegger;
 import com.pasta.ascendance.core.reggers.TagRegger;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityDataSyncS2CPacket;
 import com.pasta.ascendance.items.*;
-import com.pasta.ascendance.particles.NarrativeErasureParticle;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleEngine;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,12 +25,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -49,16 +38,11 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import com.pasta.ascendance.items.MeraliumChestplate;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import com.pasta.ascendance.items.MeraliumArmorItem;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Random;
-
-import static com.pasta.ascendance.Ascendance.LOGGER;
 
 @Mod.EventBusSubscriber(modid = "ascendance")
 public class ASCEventSubscriber {
@@ -69,11 +53,8 @@ public class ASCEventSubscriber {
         // Check if the entity is a player
         if (livingEntity instanceof Player player) {
             Item item = event.getFrom().getItem();
-            if (item instanceof MeraliumChestplate ||
-                    item instanceof MeraliumBoots ||
-                    item instanceof MeraliumLeggins ||
-                    item instanceof MeraliumHelmet) {
-                if (!MeraliumChestplate.checkFullSet(player)) {
+            if (item instanceof MeraliumArmorGecko) {
+                if (!MeraliumArmorGecko.checkFullSet(player)) {
                     LivingEntity entity = event.getEntity();
                     ServerPlayer serverPlayer = (ServerPlayer) player;
 
@@ -106,7 +87,7 @@ public class ASCEventSubscriber {
     @SubscribeEvent
     public void onEntityAttacked(LivingAttackEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (MeraliumChestplate.checkFullSet(player)) {
+            if (MeraliumArmorItem.checkFullSet(player)) {
                 event.setCanceled(true);
             }
         }
@@ -115,7 +96,7 @@ public class ASCEventSubscriber {
     @SubscribeEvent
     public void onEntityDamage(LivingDamageEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (MeraliumChestplate.checkFullSet(player)) {
+            if (MeraliumArmorItem.checkFullSet(player)) {
                 event.setCanceled(true);
             }
         }
@@ -235,6 +216,11 @@ public class ASCEventSubscriber {
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
             event.registerAboveAll("infection", InfectionHudOverlay.HUD_INFECTION);
+        }
+
+        @SubscribeEvent
+        public static void registerArmorRenderers(final EntityRenderersEvent.AddLayers event){
+            GeoArmorRenderer.registerArmorRenderer(MeraliumArmorGecko.class, new MeraliumArmorRenderer());
         }
 
     }

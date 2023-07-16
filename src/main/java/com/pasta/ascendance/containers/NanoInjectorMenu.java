@@ -1,5 +1,6 @@
 package com.pasta.ascendance.containers;
 
+import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.blocks.entities.NanoInjectorEntity;
 import com.pasta.ascendance.core.reggers.BlockRegger;
 import com.pasta.ascendance.core.reggers.MenuRegger;
@@ -36,15 +37,15 @@ public class NanoInjectorMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 4;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 5;  // must be the number of slots you have!
 
     public NanoInjectorMenu(int id, Inventory inv, FriendlyByteBuf extraData){
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(0));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
     }
 
     public NanoInjectorMenu(int id, Inventory inv, BlockEntity entity, ContainerData data){
         super(MenuRegger.NANOINJECTOR_MENU.get(), id);
-        checkContainerSize(inv,4);
+        checkContainerSize(inv,5);
         blockEntity = (NanoInjectorEntity) entity;
         this.level = inv.player.level;
         this.data = data;
@@ -54,11 +55,48 @@ public class NanoInjectorMenu extends AbstractContainerMenu {
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler ->
         {
-            for(int i=0;i<4; i++){
-                this.addSlot(new SlotItemHandler(handler, i, 48+18*i, 33));
-            }
+            this.addSlot(new SlotItemHandler(handler, 0, 12, 15));
+            this.addSlot(new SlotItemHandler(handler, 1, 26, 60));
+            this.addSlot(new SlotItemHandler(handler, 2, 73, 11));
+            this.addSlot(new SlotItemHandler(handler, 3, 99, 11));
+            this.addSlot(new RestrictedSlot(handler, 4, 86, 60));
+
 
         });
+
+        addDataSlots(data);
+    }
+
+    public boolean isCrafting(){
+        return data.get(0) > 0;
+    }
+
+    public boolean isBurning(){
+        return data.get(4) > 0;
+    }
+
+    public int getScaledProgress() {
+        int progress = this.data.get(0);
+        int maxProgress = this.data.get(1);  // Max Progress
+        int progressArrowSize = 26; // This is the height in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getScaledFuel() {
+        int progress = this.data.get(2);
+        int maxProgress = this.data.get(3);  // Max Progress
+        int progressArrowSize = 40; // This is the height in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getScaledBurning() {
+        int progress = this.data.get(4);
+        int maxProgress = this.data.get(5);  // Max Progress
+        int progressArrowSize = 14; // This is the height in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
 

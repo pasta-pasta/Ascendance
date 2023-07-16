@@ -6,6 +6,7 @@ import com.pasta.ascendance.blocks.colonies.GuardColony;
 import com.pasta.ascendance.blocks.colonies.NanoColony;
 import com.pasta.ascendance.blocks.NanoInjector;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,6 +41,13 @@ public class BlockRegger {
     public static final RegistryObject<Block> AGGRESSIVE_COLONY_BLOCK = BLOCKS.register("aggressivecolonyblock", () ->
             new AggressiveColony(Block.Properties.of(Material.STONE)
                     .strength(0.5f, 60000.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))
+    );
+
+    public static final RegistryObject<Block> NANITE_DOOR = BLOCKS.register("nanite_door", () ->
+            new DoorBlock(Block.Properties.of(Material.STONE)
+                    .strength(0.5f, 6.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE))
     );

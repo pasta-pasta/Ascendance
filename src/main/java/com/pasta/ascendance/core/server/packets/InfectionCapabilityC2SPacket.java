@@ -15,24 +15,22 @@ import java.util.function.Supplier;
 public class InfectionCapabilityC2SPacket {
 
 
+    public final int change;
 
-
-    public InfectionCapabilityC2SPacket() {
+    public InfectionCapabilityC2SPacket(int change) {
+        this.change = change;
 
     }
 
     public InfectionCapabilityC2SPacket(FriendlyByteBuf buf) {
+        this.change = buf.readInt();
 
     }
 
     public void toBytes(FriendlyByteBuf buf){
-
+        buf.writeInt(change);
     }
 
-
-    public static void encode() {
-
-    }
 
 
     public static boolean handle(InfectionCapabilityC2SPacket packet, Supplier<NetworkEvent.Context> ctx) {
@@ -41,7 +39,7 @@ public class InfectionCapabilityC2SPacket {
             ServerPlayer player = ctx.get().getSender();
             if (player != null) {
                 player.getCapability(PlayerNaniteInfectionProvider.PLAYER_INFECTION).ifPresent(infection -> {
-                    infection.changeInfection(1);
+                    infection.changeInfection(packet.change);
                     ASCServerSideHandler.sendToPlayer(new InfectionCapabilityDataSyncS2CPacket(infection.getInfection()), player);
                     if (infection.getInfection() == infection.getMAX_INFECTION()){
                         ASCFunctions.SpearAttack(player, "nanites");
