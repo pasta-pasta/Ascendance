@@ -13,9 +13,9 @@ public class MeraliumArmorRenderer extends GeoArmorRenderer<MeraliumArmorGecko> 
         this.bodyBone = "armorBody";
         this.rightArmBone = "armorRightArm";
         this.leftArmBone = "armorLeftArm";
-        this.rightLegBone = "armorLeftLeg";
-        this.leftLegBone = "armorRightLeg";
-        this.rightBootBone = "armorLeftBoot";
-        this.leftBootBone = "armorRightBoot";
+        this.leftLegBone = "armorLeftLeg";
+        this.rightLegBone = "armorRightLeg";
+        this.leftBootBone = "armorLeftBoot";
+        this.rightBootBone = "armorRightBoot";
     }
 }

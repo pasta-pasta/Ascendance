@@ -58,16 +58,11 @@ public class AgressiveSmallColony extends Item implements ICurioItem {
             entity.hurt(new DamageSource("nanites").bypassArmor(), 1.5F);
         }
 
-        if (entity instanceof Player && entity.getLevel().isClientSide){
+        if (entity.getLevel().isClientSide){
             if(rand.nextFloat()>0.8){
                 ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
             }
         }
-    }
-
-    @Override
-    public boolean canUnequip(SlotContext slotContext, ItemStack stack) {
-        return false;
     }
 
     @Override
