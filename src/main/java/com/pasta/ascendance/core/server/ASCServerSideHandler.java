@@ -1,6 +1,8 @@
 package com.pasta.ascendance.core.server;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.core.server.packets.EnergySyncS2CPacket;
+import com.pasta.ascendance.core.server.packets.FuelSyncS2CPacket;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityC2SPacket;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityDataSyncS2CPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -39,6 +41,18 @@ public class ASCServerSideHandler {
                 .encoder(InfectionCapabilityDataSyncS2CPacket::toBytes)
                 .consumerMainThread(InfectionCapabilityDataSyncS2CPacket::handle)
                 .add();
+
+        net.messageBuilder(EnergySyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(EnergySyncS2CPacket::new)
+                .encoder(EnergySyncS2CPacket::toBytes)
+                .consumerMainThread(EnergySyncS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(FuelSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(FuelSyncS2CPacket::new)
+                .encoder(FuelSyncS2CPacket::toBytes)
+                .consumerMainThread(FuelSyncS2CPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message){
@@ -47,6 +61,10 @@ public class ASCServerSideHandler {
 
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player){
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
+    }
+
+    public static <MSG> void sendToClients(MSG message){
+        INSTANCE.send(PacketDistributor.ALL.noArg(), message);
     }
 
 }

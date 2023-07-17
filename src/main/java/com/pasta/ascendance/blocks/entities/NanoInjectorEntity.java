@@ -5,6 +5,9 @@ import com.pasta.ascendance.blocks.NanoInjector;
 import com.pasta.ascendance.containers.NanoInjectorMenu;
 import com.pasta.ascendance.core.reggers.BlockEntityRegger;
 import com.pasta.ascendance.core.reggers.ItemRegger;
+import com.pasta.ascendance.core.server.ASCServerSideHandler;
+import com.pasta.ascendance.core.server.packets.EnergySyncS2CPacket;
+import com.pasta.ascendance.core.server.packets.FuelSyncS2CPacket;
 import com.pasta.ascendance.misc.ASCEnergyStorage;
 import com.pasta.ascendance.recipe.NanoinjectorRecipy;
 import net.minecraft.core.BlockPos;
@@ -25,11 +28,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -62,12 +67,14 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
         @Override
         public void onEnergyChanged() {
             setChanged();
+            ASCServerSideHandler.sendToClients(new EnergySyncS2CPacket(this.energy, getBlockPos()));
         }
     };
 
     private static final int ENERGY_REQ = 320;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
     private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
             Map.of(Direction.DOWN, LazyOptional.of(() -> new WrappedHandler(inventory, (i) -> i == 4, (i, s) -> false)),
                     Direction.NORTH, LazyOptional.of(() -> new WrappedHandler(inventory, (index) -> index == 0,
@@ -126,14 +133,33 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
         };
     }
 
+    public IEnergyStorage getEnergyStorage() {
+        return ENERGY_STORAGE;
+    }
+
+    public List<Component> getFuelTooltip(NanoInjectorEntity entity) {
+        return List.of(Component.literal(entity.fuel+"/"+entity.maxFuel+" Biounits"));
+    }
+
+    public void setEnergyLevel(int energy) {
+        this.ENERGY_STORAGE.setEnergy(energy);
+    }
+
+    public void setFuel(int fuel){
+        this.fuel = fuel;
+    }
+
     public void tick(Level level, BlockPos pos, BlockState state, NanoInjectorEntity entity){
         if(level.isClientSide()){
             return;
         }
 
-        if (hasRecipe(entity)){
+
+
+        if (hasRecipe(entity) && hasEnergy(entity)){
             entity.progress++;
             entity.fuel--;
+            entity.ENERGY_STORAGE.extractEnergy(ENERGY_REQ, false);
             setChanged(level, pos, state);
 
             if(entity.progress >= entity.maxProgress){
@@ -145,10 +171,14 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
             setChanged(level, pos, state);
         }
         
-        if (hasFuel(entity) && entity.fuel < entity.maxFuel){
+        if (hasFuel(entity) && entity.fuel <= entity.maxFuel-25){
             burn(entity);
         }
 
+    }
+
+    private boolean hasEnergy(NanoInjectorEntity entity) {
+        return entity.ENERGY_STORAGE.getEnergyStored() >= ENERGY_REQ;
     }
 
     private void burn(NanoInjectorEntity entity) {
@@ -159,6 +189,7 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
             entity.fuel = Math.min(entity.fuel+25, entity.maxFuel);
             entity.burnt = 0;
         }
+        ASCServerSideHandler.sendToClients(new FuelSyncS2CPacket(this.fuel, getBlockPos()));
 
     }
 
@@ -221,12 +252,14 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
         progress = nbt.getInt("progress");
         fuel = nbt.getInt("fuel");
         burnt = nbt.getInt("burnt");
+        setEnergyLevel(nbt.getInt("nanoinjector.energy"));
         super.load(nbt);
     }
 
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("Inventory", this.inventory.serializeNBT());
+        nbt.putInt("nanoinjector.energy", ENERGY_STORAGE.getEnergyStored());
         nbt.putInt("progress", this.progress);
         nbt.putInt("fuel", this.fuel);
         nbt.putInt("burnt", this.burnt);
@@ -235,6 +268,11 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.ENERGY){
+            return lazyEnergyHandler.cast();
+        }
+
+
         if (cap == ForgeCapabilities.ITEM_HANDLER){
             if (side == null){
                 return this.lazyItemHandler.cast();
@@ -265,6 +303,7 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
     @Override
     public void invalidateCaps() {
         this.lazyItemHandler.invalidate();
+        this.lazyEnergyHandler.invalidate();
     }
 
     public ItemStackHandler getInventory(){
@@ -284,6 +323,8 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        ASCServerSideHandler.sendToClients(new FuelSyncS2CPacket(this.fuel, getBlockPos()));
+        ASCServerSideHandler.sendToClients(new EnergySyncS2CPacket(ENERGY_STORAGE.getEnergyStored(), getBlockPos()));
         return new NanoInjectorMenu(id, inventory, this, this.data);
     }
 
@@ -291,5 +332,9 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
     public void onLoad() {
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> inventory);
+        lazyEnergyHandler = LazyOptional.of(() -> ENERGY_STORAGE);
     }
+
+
+
 }

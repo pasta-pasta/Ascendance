@@ -3,6 +3,8 @@ package com.pasta.ascendance.blocks;
 
 import com.pasta.ascendance.blocks.entities.NanoInjectorEntity;
 import com.pasta.ascendance.containers.NanoInjectorMenu;
+import com.pasta.ascendance.core.server.ASCServerSideHandler;
+import com.pasta.ascendance.core.server.packets.FuelSyncS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
