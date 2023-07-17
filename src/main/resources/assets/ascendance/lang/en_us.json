@@ -17,6 +17,8 @@
 
   "block.ascendance.nanocolony": "Nanite colony",
 
+  "block.ascendance.nanite_door": "§9Guarding nanite door",
+
   "block.ascendance.guardcolonyblock": "§9Guard nanite colony",
 
   "block.ascendance.aggressivecolonyblock": "§cAggressive nanite colony",
@@ -38,6 +40,8 @@
   "item.ascendance.sleeping_injection": "Sleeping injection",
 
   "item.ascendance.guard_injection": "§9Guard injection",
+
+  "item.ascendance.controlling_injection": "§5Controlling injection",
 
   "item.ascendance.aggressive_injection": "§cAggressive injection",
 

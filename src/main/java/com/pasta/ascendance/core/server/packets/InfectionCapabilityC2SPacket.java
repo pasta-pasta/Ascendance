@@ -2,6 +2,7 @@ package com.pasta.ascendance.core.server.packets;
 
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfectionProvider;
 import com.pasta.ascendance.core.ASCFunctions;
+import com.pasta.ascendance.core.reggers.ItemRegger;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,8 +40,10 @@ public class InfectionCapabilityC2SPacket {
                     infection.changeInfection(packet.change);
                     ASCServerSideHandler.sendToPlayer(new InfectionCapabilityDataSyncS2CPacket(infection.getInfection()), player);
                     if (infection.getInfection() == infection.getMAX_INFECTION()){
-                        ASCFunctions.SpearAttack(player, "nanites");
-                        infection.changeInfection(-infection.getInfection());
+                        if (!ASCFunctions.hasCurioItem(player, ItemRegger.CONTROLLING_INJECTION.get())){
+                            ASCFunctions.SpearAttack(player, "nanites");
+                            infection.changeInfection(-infection.getInfection());
+                        }
                     }
                 });
 

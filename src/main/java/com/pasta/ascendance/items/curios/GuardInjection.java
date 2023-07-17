@@ -48,8 +48,10 @@ public class GuardInjection extends Item implements ICurioItem {
             return;
         }
         if (entity instanceof Player && !entity.getLevel().isClientSide){
-            entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 200, 6));
-            entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 3));
+            if (!entity.hasEffect(MobEffects.HEALTH_BOOST)){
+                entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 200, 5));
+            }
+            entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 2));
             if (rand.nextFloat()>=0.95){
                 ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
             }
