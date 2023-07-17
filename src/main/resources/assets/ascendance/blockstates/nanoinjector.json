@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ascendance:block/nanoinjector"
+    },
+    "facing=south": {
+      "model": "ascendance:block/nanoinjector",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ascendance:block/nanoinjector",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "ascendance:block/nanoinjector",
+      "y": 90
+    }
+  }
+}

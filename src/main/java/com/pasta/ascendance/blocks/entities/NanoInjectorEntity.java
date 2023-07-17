@@ -1,7 +1,11 @@
 package com.pasta.ascendance.blocks.entities;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.blocks.NanoInjector;
 import com.pasta.ascendance.containers.NanoInjectorMenu;
+import com.pasta.ascendance.core.reggers.BlockEntityRegger;
+import com.pasta.ascendance.core.reggers.ItemRegger;
+import com.pasta.ascendance.misc.ASCEnergyStorage;
 import com.pasta.ascendance.recipe.NanoinjectorRecipy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +22,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import com.pasta.ascendance.core.reggers.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -27,6 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
@@ -36,9 +40,44 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
         protected void onContentsChanged(int slot) {
             setChanged();
         }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot){
+                case 0 -> stack.getItem() == ItemRegger.NUTRIENT_MEDIUM.get();
+                case 1 -> stack.getItem() == ItemRegger.ACIDIC_SUBSTATION.get();
+                case 2 -> stack.getItem() == ItemRegger.AGGRESIVE_COLONY.get()
+                        || stack.getItem() == ItemRegger.SMALLCOLONY.get()
+                        || stack.getItem() == ItemRegger.GUARD_COLONY.get();
+                case 3 -> stack.getItem() == Items.DIAMOND
+                        || stack.getItem() == Items.REDSTONE
+                        || stack.getItem() == Items.LAVA_BUCKET;
+                case 4 -> false;
+                default -> super.isItemValid(slot, stack);
+            };
+        }
     };
 
+    private final ASCEnergyStorage ENERGY_STORAGE = new ASCEnergyStorage(1200000, 12000) {
+        @Override
+        public void onEnergyChanged() {
+            setChanged();
+        }
+    };
+
+    private static final int ENERGY_REQ = 320;
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
+            Map.of(Direction.DOWN, LazyOptional.of(() -> new WrappedHandler(inventory, (i) -> i == 4, (i, s) -> false)),
+                    Direction.NORTH, LazyOptional.of(() -> new WrappedHandler(inventory, (index) -> index == 0,
+                            (index, stack) -> inventory.isItemValid(0, stack))),
+                    Direction.SOUTH, LazyOptional.of(() -> new WrappedHandler(inventory, (index) -> index == 1,
+                            (index, stack) -> inventory.isItemValid(1, stack))),
+                    Direction.EAST, LazyOptional.of(() -> new WrappedHandler(inventory, (index) -> index == 2,
+                            (index, stack) -> inventory.isItemValid(2, stack))),
+                    Direction.WEST, LazyOptional.of(() -> new WrappedHandler(inventory, (index) -> index == 3,
+                            (index, stack) -> inventory.isItemValid(3, stack))));
 
     private final ContainerData data;
 
@@ -196,7 +235,31 @@ public class NanoInjectorEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return cap == ForgeCapabilities.ITEM_HANDLER ? this.lazyItemHandler.cast() : super.getCapability(cap, side);
+        if (cap == ForgeCapabilities.ITEM_HANDLER){
+            if (side == null){
+                return this.lazyItemHandler.cast();
+            }
+
+            if (directionWrappedHandlerMap.containsKey(side)){
+                Direction localDir = this.getBlockState().getValue(NanoInjector.FACING);
+
+                if (side == Direction.UP || side == Direction.DOWN){
+                    return directionWrappedHandlerMap.get(side).cast();
+                }
+
+                switch (localDir){
+                    default:
+                        return directionWrappedHandlerMap.get(side.getOpposite()).cast();
+                    case EAST:
+                        return directionWrappedHandlerMap.get(side.getClockWise()).cast();
+                    case SOUTH:
+                        return directionWrappedHandlerMap.get(side).cast();
+                    case WEST:
+                        return directionWrappedHandlerMap.get(side.getCounterClockWise()).cast();
+                }
+            }
+        }
+        return LazyOptional.empty();
     }
 
     @Override
