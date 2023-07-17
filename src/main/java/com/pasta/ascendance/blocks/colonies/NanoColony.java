@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class NanoColony extends Block {
 
-    public static boolean isStable = true;
+    public static final boolean isStable = true;
 
     public NanoColony(Block.Properties properties) {
         super(properties);

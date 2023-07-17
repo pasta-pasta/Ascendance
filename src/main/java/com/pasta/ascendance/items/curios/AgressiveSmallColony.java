@@ -1,7 +1,6 @@
 package com.pasta.ascendance.items.curios;
 
-import com.pasta.ascendance.Ascendance;
-import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfectionProvider;
+import com.pasta.ascendance.core.ASCFunctions;
 import com.pasta.ascendance.core.reggers.ItemRegger;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityC2SPacket;
@@ -29,29 +28,14 @@ public class AgressiveSmallColony extends Item implements ICurioItem {
     public AgressiveSmallColony(Properties properties) {
         super(properties);
     }
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
-    public boolean hasCurioItem(Player player) {
-        return CuriosApi.getCuriosHelper().getCuriosHandler(player)
-                .map(handler -> {
-                    ICurioStacksHandler curioHandler = handler.getStacksHandler("curio").orElse(null);
 
-                    if (curioHandler == null) return false; // No 'curio' type found
-
-                    for (int i = 0; i < curioHandler.getSlots(); i++) {
-                        ItemStack stack = curioHandler.getStacks().getStackInSlot(i);
-                        if (stack.getItem() == ItemRegger.SLEEPING_INJECTION.get()) {
-                            return true;
-                        }
-                    }
-                    return false;
-                }).orElse(false);
-    }
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity entity = slotContext.getWearer();
-        if (hasCurioItem((Player) entity)){
+        if (ASCFunctions.hasCurioItem((Player) entity, ItemRegger.SLEEPING_INJECTION.get())){
             entity.hurt(new DamageSource("nanites"), 0.5F);
         }
         else{

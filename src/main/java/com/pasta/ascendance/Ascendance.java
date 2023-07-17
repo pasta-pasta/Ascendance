@@ -1,25 +1,18 @@
 package com.pasta.ascendance;
 
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfection;
-import com.pasta.ascendance.client.armor.MeraliumArmorRenderer;
 import com.pasta.ascendance.containers.NanoInjectorScreen;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.subscribers.ASCEventSubscriber;
 import com.pasta.ascendance.core.reggers.*;
-import com.pasta.ascendance.items.MeraliumArmorGecko;
-import com.pasta.ascendance.particles.NarrativeErasureParticle;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -30,7 +23,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 

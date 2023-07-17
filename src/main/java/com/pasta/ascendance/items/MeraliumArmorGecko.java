@@ -3,7 +3,6 @@ package com.pasta.ascendance.items;
 import com.pasta.ascendance.core.ASCTab;
 import com.pasta.ascendance.core.reggers.ItemRegger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -11,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -23,7 +21,7 @@ import software.bernie.geckolib3.item.GeoArmorItem;
 
 public class MeraliumArmorGecko extends GeoArmorItem implements IAnimatable {
 
-    private AnimationFactory factory = new AnimationFactory(this);
+    private final AnimationFactory factory = new AnimationFactory(this);
     public MeraliumArmorGecko(ArmorMaterial material, EquipmentSlot slot) {
         super(material, slot, new Properties().tab(ASCTab.instance));
     }

@@ -4,11 +4,13 @@ import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfectionProvider;
 import com.pasta.ascendance.client.armor.MeraliumArmorRenderer;
 import com.pasta.ascendance.client.hud.InfectionHudOverlay;
+import com.pasta.ascendance.core.ASCFunctions;
 import com.pasta.ascendance.core.reggers.ItemRegger;
 import com.pasta.ascendance.core.reggers.TagRegger;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityDataSyncS2CPacket;
 import com.pasta.ascendance.items.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -38,7 +40,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import com.pasta.ascendance.items.MeraliumArmorItem;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
@@ -94,10 +95,39 @@ public class ASCEventSubscriber {
     }
 
     @SubscribeEvent
-    public void onEntityDamage(LivingDamageEvent event) {
+    public void onEntityDamageMeralium(LivingDamageEvent event) {
         if (event.getEntity() instanceof Player player) {
             if (MeraliumArmorItem.checkFullSet(player)) {
                 event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityDamageGuardCurio(LivingDamageEvent event) {
+
+        if (event.getEntity() instanceof Player player) {
+
+            if (ASCFunctions.hasCurioItem(player, ItemRegger.GUARD_INJECTION.get())) {
+                player.getCapability(PlayerNaniteInfectionProvider.PLAYER_INFECTION).ifPresent(inf -> {
+                    int infection = inf.getInfection();
+                    event.setAmount(event.getAmount()*((float) 10 /infection));
+                } );
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityDamageAggressiveCurio(LivingDamageEvent event) {
+
+        if (event.getSource().getEntity() instanceof Player player) {
+            int countInjection = ASCFunctions.countCurioItem(player, ItemRegger.AGGRESSIVE_INJECTION.get());
+            if (countInjection > 0) {
+                player.getCapability(PlayerNaniteInfectionProvider.PLAYER_INFECTION).ifPresent(inf -> {
+                    int infection = inf.getInfection();
+                    event.setAmount(event.getAmount()*((float) infection /10)*countInjection);
+                } );
+
             }
         }
     }

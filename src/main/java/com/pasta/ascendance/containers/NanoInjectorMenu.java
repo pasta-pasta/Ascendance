@@ -3,8 +3,6 @@ package com.pasta.ascendance.containers;
 import com.pasta.ascendance.blocks.entities.NanoInjectorEntity;
 import com.pasta.ascendance.core.reggers.BlockRegger;
 import com.pasta.ascendance.core.reggers.MenuRegger;
-import com.pasta.ascendance.core.server.ASCServerSideHandler;
-import com.pasta.ascendance.core.server.packets.FuelSyncS2CPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

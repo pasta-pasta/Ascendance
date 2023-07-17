@@ -1,7 +1,6 @@
 package com.pasta.ascendance.client.armor;
 
 import com.pasta.ascendance.items.MeraliumArmorGecko;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class MeraliumArmorRenderer extends GeoArmorRenderer<MeraliumArmorGecko> {

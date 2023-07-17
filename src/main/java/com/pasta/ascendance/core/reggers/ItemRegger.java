@@ -3,7 +3,9 @@ package com.pasta.ascendance.core.reggers;
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.core.ASCTab;
 import com.pasta.ascendance.items.*;
+import com.pasta.ascendance.items.curios.AggressiveInjection;
 import com.pasta.ascendance.items.curios.AgressiveSmallColony;
+import com.pasta.ascendance.items.curios.GuardInjection;
 import com.pasta.ascendance.items.curios.SleepingInjection;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
@@ -32,6 +34,12 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> SLEEPING_INJECTION = ITEMS.register("sleeping_injection",
             () -> new SleepingInjection(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(1000)));
+
+    public static final RegistryObject<Item> GUARD_INJECTION = ITEMS.register("guard_injection",
+            () -> new GuardInjection(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> AGGRESSIVE_INJECTION = ITEMS.register("aggressive_injection",
+            () -> new AggressiveInjection(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
 
     public static final RegistryObject<Item> SMALLCOLONY = ITEMS.register("small_colony",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));

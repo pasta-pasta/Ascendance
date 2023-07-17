@@ -5,7 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 public class PlayerNaniteInfection {
     private int infection;
     private final int MIN_INFECTION = 0;
-    private int MAX_INFECTION = 100;
+    private final int MAX_INFECTION = 100;
 
     public int getInfection(){
         return infection;

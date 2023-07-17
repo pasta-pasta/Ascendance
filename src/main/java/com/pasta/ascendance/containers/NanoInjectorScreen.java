@@ -3,24 +3,14 @@ package com.pasta.ascendance.containers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.pasta.ascendance.Ascendance;
-import com.pasta.ascendance.blocks.entities.NanoInjectorEntity;
 import com.pasta.ascendance.containers.renderer.EnergyInfoArea;
 import com.pasta.ascendance.misc.ASCMouseUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.client.gui.widget.ExtendedButton;
-import org.w3c.dom.Text;
 
-import java.awt.*;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class NanoInjectorScreen extends AbstractContainerScreen<NanoInjectorMenu> {

@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import com.pasta.ascendance.core.reggers.*;
 
 import static com.pasta.ascendance.core.reggers.BlockRegger.NANOINJECTOR;
 

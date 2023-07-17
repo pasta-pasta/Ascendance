@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ascendance:block/nanite_door"
+    },
+    "facing=south": {
+      "model": "ascendance:block/nanite_door",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ascendance:block/nanite_door",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "ascendance:block/nanite_door",
+      "y": 90
+    }
+  }
+}

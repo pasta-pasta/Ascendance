@@ -21,6 +21,8 @@
 
   "block.ascendance.aggressivecolonyblock": "§cAggressive nanite colony",
 
+  "block.ascendance.nanoinjector": "Nanite growing station",
+
   "item.ascendance.small_colony": "§7Small nanite colony",
 
   "item.ascendance.nanite_killer": "§4Nanite killer",
@@ -34,6 +36,10 @@
   "item.ascendance.empty_injection": "Empty injection",
 
   "item.ascendance.sleeping_injection": "Sleeping injection",
+
+  "item.ascendance.guard_injection": "§9Guard injection",
+
+  "item.ascendance.aggressive_injection": "§cAggressive injection",
 
   "death.attack.spear": "%1$s was erased from the narrative",
 

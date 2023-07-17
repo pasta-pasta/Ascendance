@@ -2,7 +2,11 @@ package com.pasta.ascendance.items.curios;
 
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityC2SPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -18,31 +22,43 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class SleepingInjection extends Item implements ICurioItem {
+public class GuardInjection extends Item implements ICurioItem {
 
     private final Random rand = new Random();
 
-    public SleepingInjection(Properties properties) {
+    public GuardInjection(Properties properties) {
         super(properties);
     }
 
+    @Override
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack oldStack) {
+        LivingEntity entity = slotContext.getWearer();
+        if (entity instanceof Player) {
+            // Remove the effects
+            entity.removeEffect(MobEffects.HEALTH_BOOST);
+            entity.removeEffect(MobEffects.REGENERATION);
+        }
+    }
 
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity entity = slotContext.getWearer();
-        if (entity instanceof Player && entity.getLevel().isClientSide){
-            if(rand.nextFloat()>0.9){
-                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(-2));
-                stack.setDamageValue(stack.getDamageValue()+1);
-                if (stack.getDamageValue() >= stack.getMaxDamage()) stack.setCount(0);
+        if(Minecraft.getInstance().getConnection() == null){
+            return;
+        }
+        if (entity instanceof Player && !entity.getLevel().isClientSide){
+            entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 200, 6));
+            entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 3));
+            if (rand.nextFloat()>=0.95){
+                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
             }
         }
     }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.literal("A sleeping group of nanites will provide some reduction of nanite infection."));
+        tooltip.add(Component.literal("This guarding group of nanites will defend you with its life at cost of some infection."));
 
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }

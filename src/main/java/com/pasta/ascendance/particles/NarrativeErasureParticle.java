@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class NarrativeErasureParticle extends TextureSheetParticle {
 
-    Random rand = new Random();
+    final Random rand = new Random();
     protected NarrativeErasureParticle(ClientLevel level, double xCoord, double yCoord, double zCoord,
                                        SpriteSet spriteSet, double dx, double dy, double dz) {
         super(level, xCoord, yCoord, zCoord, dx, dy, dz);

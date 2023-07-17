@@ -3,9 +3,6 @@ package com.pasta.ascendance.core.reggers;
 import com.pasta.ascendance.particles.NarrativeErasureParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEngine;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.jetbrains.annotations.NotNull;
 
 import static com.pasta.ascendance.Ascendance.LOGGER;
 

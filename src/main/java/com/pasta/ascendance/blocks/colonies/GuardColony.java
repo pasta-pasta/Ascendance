@@ -1,6 +1,5 @@
 package com.pasta.ascendance.blocks.colonies;
 
-import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.core.reggers.BlockRegger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,9 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Random;
 
 public class GuardColony extends NanoColony{
-    public static boolean isStable = false;
+    public static final boolean isStable = false;
 
-    Random rand = new Random();
+    final Random rand = new Random();
 
     public GuardColony(Block.Properties properties) {
         super(properties);

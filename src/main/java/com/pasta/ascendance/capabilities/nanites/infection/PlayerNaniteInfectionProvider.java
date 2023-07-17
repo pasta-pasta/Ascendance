@@ -8,13 +8,12 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PlayerNaniteInfectionProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<PlayerNaniteInfection> PLAYER_INFECTION =
+    public static final Capability<PlayerNaniteInfection> PLAYER_INFECTION =
             CapabilityManager.get(new CapabilityToken<PlayerNaniteInfection>() {});
 
     private PlayerNaniteInfection infection = null;

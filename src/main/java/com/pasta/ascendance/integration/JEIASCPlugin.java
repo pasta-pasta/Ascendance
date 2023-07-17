@@ -9,14 +9,13 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.List;
 import java.util.Objects;
 
 @JeiPlugin
 public class JEIASCPlugin implements IModPlugin {
-    public static mezz.jei.api.recipe.RecipeType<NanoinjectorRecipy> INJECTION_TYPE =
+    public static final mezz.jei.api.recipe.RecipeType<NanoinjectorRecipy> INJECTION_TYPE =
             new mezz.jei.api.recipe.RecipeType<>(NanoinjectorRecipeCategory.UID, NanoinjectorRecipy.class);
 
     @Override

@@ -1,6 +1,5 @@
 package com.pasta.ascendance.blocks.colonies;
 
-import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.core.reggers.BlockRegger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AggressiveColony extends NanoColony{
-    public static boolean isStable = false;
+    public static final boolean isStable = false;
 
     public AggressiveColony(Properties properties) {
         super(properties);

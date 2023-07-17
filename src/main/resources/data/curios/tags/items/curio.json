@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "ascendance:aggressive_colony",
-    "ascendance:sleeping_injection"
+    "ascendance:sleeping_injection",
+    "ascendance:guard_injection",
+    "ascendance:aggressive_injection"
   ]
 }

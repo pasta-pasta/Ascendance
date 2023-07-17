@@ -1,30 +1,22 @@
 package com.pasta.ascendance.items;
 
-import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.core.ASCFunctions;
 import com.pasta.ascendance.core.reggers.ParticleRegger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 
 
 import javax.annotation.Nullable;
@@ -35,7 +27,7 @@ import static com.pasta.ascendance.core.ASCFunctions.rayTrace;
 
 public class Spear extends SwordItem {
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
     public Spear(Properties properties){
 
         super(ASCTiers.MERALIUM_TIER, Integer.MAX_VALUE, Integer.MAX_VALUE,  properties);
