@@ -43,13 +43,13 @@ public class InfectionCapabilityC2SPacket {
                         if (!ASCFunctions.hasCurioItem(player, ItemRegger.CONTROLLING_INJECTION.get())){
                             ASCFunctions.SpearAttack(player, "nanites");
                             infection.changeInfection(-infection.getInfection());
+                            ASCServerSideHandler.sendToPlayer(new InfectionCapabilityDataSyncS2CPacket(infection.getInfection()), player);
                         }
                     }
                 });
 
             }
         });
-        ctx.get().setPacketHandled(true);
         return true;
 
     }

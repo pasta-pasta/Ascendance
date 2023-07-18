@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "ascendance:items/meraliumarmor_body"
+    "layer0": "ascendance:items/meraliumarmor_chestplate"
   }
 
 }

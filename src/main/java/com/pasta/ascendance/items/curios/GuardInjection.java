@@ -44,14 +44,13 @@ public class GuardInjection extends Item implements ICurioItem {
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity entity = slotContext.getWearer();
-        if(Minecraft.getInstance().getConnection() == null){
-            return;
-        }
-        if (entity instanceof Player && !entity.getLevel().isClientSide){
+        if (entity instanceof Player && entity.getLevel().isClientSide){
             if (!entity.hasEffect(MobEffects.HEALTH_BOOST)){
-                entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 200, 5));
+                entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 200000, 5));
             }
-            entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 2));
+            if (!entity.hasEffect(MobEffects.REGENERATION)){
+                entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 2));
+            }
             if (rand.nextFloat()>=0.95){
                 ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
             }

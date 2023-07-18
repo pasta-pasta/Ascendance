@@ -15,6 +15,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -45,6 +46,7 @@ public class Spear extends SwordItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         BlockHitResult ray = rayTrace(level, player, ClipContext.Fluid.NONE);
         BlockPos pos = ray.getBlockPos();
+
 
         double boxSize = 20.0D;
         AABB box = new AABB(pos).inflate(boxSize);

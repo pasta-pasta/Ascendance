@@ -41,11 +41,9 @@ public class Ascendance {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerParticleFactories);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::textureStitch);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegisterCapabilities);
-        modEventBus.addListener(this::setup);
+
 
 
 
@@ -68,13 +66,9 @@ public class Ascendance {
 
 
     private void setup(final FMLCommonSetupEvent event) {
-
+        ASCServerSideHandler.register();
     }
 
-    private void textureStitch(final TextureStitchEvent.Pre event){
-        event.addSprite(new ResourceLocation(Ascendance.MOD_ID, "items/curio_icon"));
-
-    }
 
     private void enqueueIMC(final InterModEnqueueEvent event){
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
@@ -87,20 +81,12 @@ public class Ascendance {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         MenuScreens.register(MenuRegger.NANOINJECTOR_MENU.get(), NanoInjectorScreen::new);
-        ASCServerSideHandler.register();
     }
 
-    public void registerParticleFactories(final RegisterParticleProvidersEvent event) {
-        ParticleFactoryRegger.register();
-    }
+
 
     public void onRegisterCapabilities(RegisterCapabilitiesEvent event){
         event.register(PlayerNaniteInfection.class);
     }
 
-
-
-
-
- 
 }

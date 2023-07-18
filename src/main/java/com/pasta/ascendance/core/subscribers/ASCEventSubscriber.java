@@ -6,6 +6,7 @@ import com.pasta.ascendance.client.armor.MeraliumArmorRenderer;
 import com.pasta.ascendance.client.hud.InfectionHudOverlay;
 import com.pasta.ascendance.core.ASCFunctions;
 import com.pasta.ascendance.core.reggers.ItemRegger;
+import com.pasta.ascendance.core.reggers.ParticleFactoryRegger;
 import com.pasta.ascendance.core.reggers.TagRegger;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.server.packets.InfectionCapabilityDataSyncS2CPacket;
@@ -30,6 +31,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -105,7 +108,6 @@ public class ASCEventSubscriber {
 
     @SubscribeEvent
     public void onEntityDamageGuardCurio(LivingDamageEvent event) {
-
         if (event.getEntity() instanceof Player player) {
 
             if (ASCFunctions.hasCurioItem(player, ItemRegger.GUARD_INJECTION.get())) {
@@ -251,6 +253,17 @@ public class ASCEventSubscriber {
         @SubscribeEvent
         public static void registerArmorRenderers(final EntityRenderersEvent.AddLayers event){
             GeoArmorRenderer.registerArmorRenderer(MeraliumArmorGecko.class, new MeraliumArmorRenderer());
+        }
+
+        @SubscribeEvent
+        public static void registerParticleFactories(final RegisterParticleProvidersEvent event) {
+            ParticleFactoryRegger.register();
+        }
+
+        @SubscribeEvent
+        public static void textureStitch(final TextureStitchEvent.Pre event){
+            event.addSprite(new ResourceLocation(Ascendance.MOD_ID, "items/curio_icon"));
+
         }
 
     }

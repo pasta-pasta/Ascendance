@@ -20,13 +20,22 @@ public class ItemRegger {
     public static final RegistryObject<Item> SPEAR = ITEMS.register("spear",
             () -> new Spear(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
 
+    public static final RegistryObject<Item> NANOBREAKER = ITEMS.register("nanobreaker", () ->
+            new Nanobreaker(ASCTiers.MERALIUM_TIER, Integer.MAX_VALUE, Integer.MAX_VALUE, new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> NANITE_EXTRACTOR = ITEMS.register("nanite_extractor",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(100)));
+
+    public static final RegistryObject<Item> NANITE_KILLER = ITEMS.register("nanite_killer",
+            () -> new NaniteKiller(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> BlockstateChecker = ITEMS.register("blockstate_checker",
+            () -> new BlockstateChecker(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
     public static final RegistryObject<Item> MERALIUM_INGOT = ITEMS.register("meralium_ingot",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
     public static final RegistryObject<Item> EMPTY_INJECTION = ITEMS.register("empty_injection",
-            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
-
-    public static final RegistryObject<Item> GUARD_COLONY = ITEMS.register("guard_colony",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
     public static final RegistryObject<Item> SLEEPING_INJECTION = ITEMS.register("sleeping_injection",
@@ -44,11 +53,13 @@ public class ItemRegger {
     public static final RegistryObject<Item> SMALLCOLONY = ITEMS.register("small_colony",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
+    public static final RegistryObject<Item> GUARD_COLONY = ITEMS.register("guard_colony",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
     public static final RegistryObject<Item> AGGRESIVE_COLONY = ITEMS.register("aggressive_colony",
             () -> new AgressiveSmallColony(new Item.Properties().tab(ASCTab.instance)));
 
-    public static final RegistryObject<Item> NANITE_EXTRACTOR = ITEMS.register("nanite_extractor",
-            () -> new Item(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(100)));
+
 
     public static final RegistryObject<Item> ACIDIC_SUBSTATION = ITEMS.register("acid",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
@@ -56,8 +67,7 @@ public class ItemRegger {
     public static final RegistryObject<Item> NUTRIENT_MEDIUM = ITEMS.register("nutrient_medium",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
-    public static final RegistryObject<Item> NANITE_KILLER = ITEMS.register("nanite_killer",
-            () -> new NaniteKiller(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
 
     public static final RegistryObject<Item> MERALIUM_HELMET = ITEMS.register("meralium_helmet", () ->
             new MeraliumArmorGecko(Meralium.MERALIUM, EquipmentSlot.HEAD)
@@ -75,15 +85,12 @@ public class ItemRegger {
             new MeraliumArmorGecko(Meralium.MERALIUM, EquipmentSlot.FEET)
     );
 
-    public static final RegistryObject<Item> NANOBREAKER = ITEMS.register("nanobreaker", () ->
-            new Nanobreaker(ASCTiers.MERALIUM_TIER, Integer.MAX_VALUE, Integer.MAX_VALUE, new Item.Properties().tab(ASCTab.instance)));
+    public static final RegistryObject<Item> NANITE_DOOR_ITEM = ITEMS.register("nanite_door_item", () ->
+            new BlockItem(NANITE_DOOR.get(), new Item.Properties().tab(ASCTab.instance))
+    );
 
     public static final RegistryObject<Item> NANOCOLONY_ITEM = ITEMS.register("nanocolony_item", () ->
             new BlockItem(NANOCOLONY.get(), new Item.Properties().tab(ASCTab.instance))
-    );
-
-    public static final RegistryObject<Item> NANITE_DOOR_ITEM = ITEMS.register("nanite_door_item", () ->
-            new BlockItem(NANITE_DOOR.get(), new Item.Properties().tab(ASCTab.instance))
     );
 
     public static final RegistryObject<Item> GUARDCOLONY_ITEM = ITEMS.register("guardcolony_item", () ->
@@ -96,5 +103,9 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> NANOINJECTOR_ITEM = ITEMS.register("nanoinjector_item", () ->
             new BlockItem(NANOINJECTOR.get(), new Item.Properties().tab(ASCTab.instance))
+    );
+
+    public static final RegistryObject<Item> CONTROLLINGCOLONY_ITEM = ITEMS.register("controllingcolony_item", () ->
+            new BlockItem(CONTROLLING_COLONY_BLOCK.get(), new Item.Properties().tab(ASCTab.instance))
     );
 }

@@ -26,11 +26,9 @@ public class InfectionCapabilityDataSyncS2CPacket {
 
 
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
-        NetworkEvent.Context context = ctx.get();
         ctx.get().enqueueWork(() -> {
             ClientInfectionData.set(infection);
         });
-        ctx.get().setPacketHandled(true);
         return true;
 
     }

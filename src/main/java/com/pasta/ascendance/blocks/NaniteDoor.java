@@ -81,6 +81,4 @@ public class NaniteDoor extends Block {
         return InteractionResult.SUCCESS;
     }
 
-
-
 }

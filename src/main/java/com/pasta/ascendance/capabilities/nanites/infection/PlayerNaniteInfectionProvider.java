@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlayerNaniteInfectionProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static final Capability<PlayerNaniteInfection> PLAYER_INFECTION =
+    public static Capability<PlayerNaniteInfection> PLAYER_INFECTION =
             CapabilityManager.get(new CapabilityToken<PlayerNaniteInfection>() {});
 
     private PlayerNaniteInfection infection = null;

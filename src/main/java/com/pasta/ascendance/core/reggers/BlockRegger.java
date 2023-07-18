@@ -3,6 +3,7 @@ package com.pasta.ascendance.core.reggers;
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.blocks.NaniteDoor;
 import com.pasta.ascendance.blocks.colonies.AggressiveColony;
+import com.pasta.ascendance.blocks.colonies.ControllingColony;
 import com.pasta.ascendance.blocks.colonies.GuardColony;
 import com.pasta.ascendance.blocks.colonies.NanoColony;
 import com.pasta.ascendance.blocks.NanoInjector;
@@ -42,6 +43,13 @@ public class BlockRegger {
     public static final RegistryObject<Block> AGGRESSIVE_COLONY_BLOCK = BLOCKS.register("aggressivecolonyblock", () ->
             new AggressiveColony(Block.Properties.of(Material.STONE)
                     .strength(0.5f, 60000.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))
+    );
+
+    public static final RegistryObject<Block> CONTROLLING_COLONY_BLOCK = BLOCKS.register("controllingcolonyblock", () ->
+            new ControllingColony(Block.Properties.of(Material.STONE)
+                    .strength(5f, 60000.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE))
     );
