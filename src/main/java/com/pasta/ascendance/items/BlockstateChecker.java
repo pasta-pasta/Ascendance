@@ -24,7 +24,7 @@ public class BlockstateChecker extends Item {
         BlockHitResult ray = rayTrace(level, player, ClipContext.Fluid.NONE);
         BlockPos pos = ray.getBlockPos();
 
-        player.displayClientMessage(Component.literal(level.getBlockState(pos).getBlock().getName().toString()), false);
+        player.displayClientMessage(Component.translatable(level.getBlockState(pos).getBlock().getDescriptionId()), false);
 
         return super.use(level, player, pUsedHand);
     }

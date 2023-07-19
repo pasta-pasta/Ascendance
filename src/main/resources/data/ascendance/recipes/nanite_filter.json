@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " @ ",
+    "#/#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "@": {
+      "item": "ascendance:sleeping_colony"
+    },
+    "/": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "ascendance:nanite_filter"
+  }
+}

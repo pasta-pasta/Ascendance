@@ -3,15 +3,15 @@
 
   "item.ascendance.spear": "§4Spear of Longinus",
 
-  "item.ascendance.meralium_helmet": "§7Meralium Helmet",
+  "item.ascendance.meralium_helmet": "§5Meralium Helmet",
 
-  "item.ascendance.meralium_chestplate": "§7Meralium Chestplate",
+  "item.ascendance.meralium_chestplate": "§5Meralium Chestplate",
 
-  "item.ascendance.meralium_leggins": "§7Meralium Leggins",
+  "item.ascendance.meralium_leggins": "§5Meralium Leggins",
 
-  "item.ascendance.meralium_boots": "§7Meralium Boots",
+  "item.ascendance.meralium_boots": "§5Meralium Boots",
 
-  "item.ascendance.meralium_ingot": "§7Meralium Colony",
+  "item.ascendance.meralium_ingot": "§5Meralium Colony",
 
   "item.ascendance.nanobreaker": "§6The Nanobreaker",
 
@@ -35,6 +35,8 @@
 
   "item.ascendance.nanite_extractor": "§3Nanite Extractor",
 
+  "item.ascendance.blockstate_checker": "§4Blockstate checker",
+
   "item.ascendance.empty_injection": "Empty injection",
 
   "item.ascendance.nutrient_medium": "Nutrient medium",
@@ -48,6 +50,10 @@
   "item.ascendance.controlling_injection": "§5Controlling injection",
 
   "item.ascendance.aggressive_injection": "§cAggressive injection",
+
+  "item.ascendance.nanite_filter": "Nanite filter",
+
+  "item.ascendance.nanite_jar": "Nanite containment silo",
 
   "death.attack.spear": "%1$s was erased from the narrative",
 

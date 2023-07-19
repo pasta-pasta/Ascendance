@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " @ ",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "ascendance:nanite_glass"
+    },
+    "@": {
+      "item": "ascendance:nanite_filter"
+    }
+  },
+  "result": {
+    "item": "ascendance:nanite_jar"
+  }
+}

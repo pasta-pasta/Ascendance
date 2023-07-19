@@ -1,0 +1,14 @@
+{
+  "name": "Sleeping colonies",
+  "icon": "ascendance:nanocolony_item",
+  "category": "ascendance:first_steps",
+
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Sleeping nanite colonies",
+      "item": "ascendance:nanocolony_item",
+      "text": "You may have found these blocks in the overworld. They are sleeping nanite colonies, and are main material for the progress in early stages of the game. They require atleast diamond pickaxe to break, but, even if you had one, you may have found that no items dropped. That's because these are very fragile and drop small colonies only with certain chance - around 50%.$(br2) Do not worry, you will be able to overcome this issue when you'll acquire drop."
+    }
+  ]
+}

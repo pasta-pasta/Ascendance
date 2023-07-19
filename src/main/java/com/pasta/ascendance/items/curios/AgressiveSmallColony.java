@@ -44,7 +44,7 @@ public class AgressiveSmallColony extends Item implements ICurioItem {
 
         if (entity.getLevel().isClientSide){
             if(rand.nextFloat()>0.8){
-                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
+                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1, entity.getUUID()));
             }
         }
     }

@@ -30,7 +30,7 @@ public class AggressiveInjection extends Item implements ICurioItem {
         LivingEntity entity = slotContext.getWearer();
         if (entity instanceof Player && entity.getLevel().isClientSide){
             if (rand.nextFloat()>0.7){
-                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
+                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1, entity.getUUID()));
             }
         }
     }

@@ -7,9 +7,7 @@ import com.pasta.ascendance.blocks.colonies.ControllingColony;
 import com.pasta.ascendance.blocks.colonies.GuardColony;
 import com.pasta.ascendance.blocks.colonies.NanoColony;
 import com.pasta.ascendance.blocks.NanoInjector;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -52,6 +50,13 @@ public class BlockRegger {
                     .strength(5f, 60000.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE))
+    );
+
+    public static final RegistryObject<Block> NANITE_GLASS = BLOCKS.register("nanite_glass", () ->
+            new GlassBlock(Block.Properties.of(Material.GLASS)
+                    .strength(5f, 60.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.GLASS).noOcclusion())
     );
 
     public static final RegistryObject<Block> NANITE_DOOR = BLOCKS.register("nanite_door", () ->

@@ -52,7 +52,7 @@ public class GuardInjection extends Item implements ICurioItem {
                 entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 2));
             }
             if (rand.nextFloat()>=0.95){
-                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1));
+                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(1, entity.getUUID()));
             }
         }
     }

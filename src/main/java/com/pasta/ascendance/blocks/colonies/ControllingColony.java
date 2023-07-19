@@ -29,11 +29,17 @@ public class ControllingColony extends NanoColony{
         for(Direction dir : directions){
             BlockPos targetPos = pos.relative(dir);
 
-            // Check if the block at the target position isn't a blocker block
+            int originalChunkX = pos.getX() >> 4;
+            int originalChunkZ = pos.getZ() >> 4;
+
             BlockState targetState = level.getBlockState(targetPos);
             Block targetBlock = targetState.getBlock();
 
-            if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get() && targetBlock != BlockRegger.NANITE_DOOR.get()) {
+            int targetChunkX = targetPos.getX() >> 4;
+            int targetChunkZ = targetPos.getZ() >> 4;
+
+            if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get() && targetBlock != BlockRegger.NANITE_DOOR.get()
+                && originalChunkX == targetChunkX && originalChunkZ == targetChunkZ) {
                 // If it's not a blocker block, replace it with a copy of this block
                 level.setBlock(targetPos, state, 3);
             }

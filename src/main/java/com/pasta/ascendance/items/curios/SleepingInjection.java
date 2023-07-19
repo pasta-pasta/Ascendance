@@ -33,7 +33,7 @@ public class SleepingInjection extends Item implements ICurioItem {
         LivingEntity entity = slotContext.getWearer();
         if (entity instanceof Player && entity.getLevel().isClientSide){
             if(rand.nextFloat()>0.9){
-                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(-2));
+                ASCServerSideHandler.sendToServer(new InfectionCapabilityC2SPacket(-2, entity.getUUID()));
                 stack.setDamageValue(stack.getDamageValue()+1);
                 if (stack.getDamageValue() >= stack.getMaxDamage()) stack.setCount(0);
             }

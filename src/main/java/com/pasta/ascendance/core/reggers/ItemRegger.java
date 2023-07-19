@@ -7,6 +7,7 @@ import com.pasta.ascendance.items.curios.*;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -38,6 +39,12 @@ public class ItemRegger {
     public static final RegistryObject<Item> EMPTY_INJECTION = ITEMS.register("empty_injection",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
+    public static final RegistryObject<Item> NANITE_JAR = ITEMS.register("nanite_jar",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> NANITE_FILTER = ITEMS.register("nanite_filter",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
     public static final RegistryObject<Item> SLEEPING_INJECTION = ITEMS.register("sleeping_injection",
             () -> new SleepingInjection(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(1000)));
 
@@ -58,7 +65,6 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> AGGRESIVE_COLONY = ITEMS.register("aggressive_colony",
             () -> new AgressiveSmallColony(new Item.Properties().tab(ASCTab.instance)));
-
 
 
     public static final RegistryObject<Item> ACIDIC_SUBSTATION = ITEMS.register("acid",
@@ -107,5 +113,9 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> CONTROLLINGCOLONY_ITEM = ITEMS.register("controllingcolony_item", () ->
             new BlockItem(CONTROLLING_COLONY_BLOCK.get(), new Item.Properties().tab(ASCTab.instance))
+    );
+
+    public static final RegistryObject<Item> NANITEGLASS_ITEM = ITEMS.register("naniteglass_item", () ->
+            new BlockItem(NANITE_GLASS.get(), new Item.Properties().tab(ASCTab.instance))
     );
 }

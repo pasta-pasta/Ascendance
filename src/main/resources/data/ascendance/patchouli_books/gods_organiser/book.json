@@ -1,0 +1,11 @@
+{
+  "name": "§eGod's Organiser",
+  "subtitle": "from spear to Spear",
+  "show_progress": false,
+  "landing_text": "§oThis is our way to kill gods.",
+  "book_texture": "patchouli:textures/gui/book_cyan.png",
+  "version": 0,
+  "creative_tab": "ascendance:asctab",
+  "model": "ascendance:blockstate_checker",
+  "use_resource_pack": false
+}
