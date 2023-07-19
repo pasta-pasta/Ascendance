@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#$/",
+    "#@$",
+    "@##"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "@": {
+      "item": "ascendance:redstone_core"
+    },
+    "/": {
+      "item": "minecraft:copper_ingot"
+    },
+    "$": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "ascendance:catalyst"
+  }
+}

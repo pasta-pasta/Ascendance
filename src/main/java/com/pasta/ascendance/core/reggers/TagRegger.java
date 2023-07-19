@@ -14,4 +14,6 @@ public class TagRegger {
 
     public static final TagKey<Item> compostables = ItemTags.create(new ResourceLocation(Ascendance.MOD_ID, "compostables"));
 
+    public static final TagKey<Block> naniteBlockers = BlockTags.create(new ResourceLocation(Ascendance.MOD_ID, "nanite_blockers"));
+
 }

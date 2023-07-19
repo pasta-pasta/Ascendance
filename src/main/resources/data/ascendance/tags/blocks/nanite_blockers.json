@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "ascendance:nanite_door",
+    "ascendance:guardcolonyblock",
+    "ascendance:aggressivecolonyblock",
+    "ascendance:nanite_glass",
+    "minecraft:bedrock",
+    "minecraft:end_portal_frame"
+  ]
+}

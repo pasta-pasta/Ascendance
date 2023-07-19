@@ -38,7 +38,7 @@ public class ControllingColony extends NanoColony{
             int targetChunkX = targetPos.getX() >> 4;
             int targetChunkZ = targetPos.getZ() >> 4;
 
-            if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get() && targetBlock != BlockRegger.NANITE_DOOR.get()
+            if (canReplace(level, targetPos)
                 && originalChunkX == targetChunkX && originalChunkZ == targetChunkZ) {
                 // If it's not a blocker block, replace it with a copy of this block
                 level.setBlock(targetPos, state, 3);

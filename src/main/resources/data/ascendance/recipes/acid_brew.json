@@ -7,16 +7,16 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:glass"
     },
     "@": {
-      "item": "ascendance:small_colony"
+      "item": "ascendance:nanite_filter"
     },
     "/": {
-      "item": "minecraft:redstone"
+      "item": "ascendance:catalyst"
     }
   },
   "result": {
-    "item": "ascendance:nanite_filter"
+    "item": "ascendance:acid_brew"
   }
 }

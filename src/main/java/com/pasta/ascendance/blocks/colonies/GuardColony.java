@@ -34,7 +34,7 @@ public class GuardColony extends NanoColony{
             BlockState targetState = level.getBlockState(targetPos);
             Block targetBlock = targetState.getBlock();
 
-            if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get() && targetBlock != BlockRegger.NANITE_DOOR.get()) {
+            if (canReplace(level, targetPos)) {
 
                 level.setBlock(targetPos, state, 3);
             }

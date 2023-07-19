@@ -45,6 +45,18 @@ public class ItemRegger {
     public static final RegistryObject<Item> NANITE_FILTER = ITEMS.register("nanite_filter",
             () -> new Item(new Item.Properties().tab(ASCTab.instance)));
 
+    public static final RegistryObject<Item> ACID_BREW = ITEMS.register("acid_brew",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> CATALYST = ITEMS.register("catalyst",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> REDSTONE_CORE = ITEMS.register("redstone_core",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
+    public static final RegistryObject<Item> DISPOSABLE = ITEMS.register("disposable",
+            () -> new Item(new Item.Properties().tab(ASCTab.instance)));
+
     public static final RegistryObject<Item> SLEEPING_INJECTION = ITEMS.register("sleeping_injection",
             () -> new SleepingInjection(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(1000)));
 

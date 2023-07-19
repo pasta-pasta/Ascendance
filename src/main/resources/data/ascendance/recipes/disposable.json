@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "@@@",
+    "@/@",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "ascendance:nanite_filter"
+    },
+    "/": {
+      "item": "ascendance:acid"
+    },
+    "@": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "ascendance:disposable"
+  }
+}

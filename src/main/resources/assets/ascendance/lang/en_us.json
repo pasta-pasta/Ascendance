@@ -25,6 +25,8 @@
 
   "block.ascendance.nanoinjector": "Nanite growing station",
 
+  "block.ascendance.nanite_glass": "§9Guard nanite glass",
+
   "item.ascendance.small_colony": "§7Small nanite colony",
 
   "item.ascendance.nanite_killer": "§4Nanite killer",
@@ -42,6 +44,14 @@
   "item.ascendance.nutrient_medium": "Nutrient medium",
 
   "item.ascendance.acid": "Acidic fuel",
+
+  "item.ascendance.redstone_core": "Redstone core",
+
+  "item.ascendance.catalyst": "Redstone catalyst",
+
+  "item.ascendance.acid_brew": "Acid brewing element",
+
+  "item.ascendance.disposable": "Nutrient container",
 
   "item.ascendance.sleeping_injection": "Sleeping injection",
 

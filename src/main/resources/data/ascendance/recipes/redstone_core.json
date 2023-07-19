@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#@#",
+    "@/@",
+    "#@#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "@": {
+      "item": "ascendance:guard_colony"
+    },
+    "/": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "ascendance:redstone_core"
+  }
+}

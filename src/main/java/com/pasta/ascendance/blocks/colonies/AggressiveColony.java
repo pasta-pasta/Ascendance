@@ -38,7 +38,7 @@ public class AggressiveColony extends NanoColony{
         BlockState targetState = level.getBlockState(targetPos);
         Block targetBlock = targetState.getBlock();
 
-        if (targetBlock != BlockRegger.GUARD_COLONY_BLOCK.get() && targetBlock != BlockRegger.NANITE_DOOR.get()) {
+        if (canReplace(level, targetPos)) {
             // If it's not a blocker block, replace it with a copy of this block
             level.setBlock(targetPos, state, 3);
         }
