@@ -61,6 +61,7 @@ public class Ascendance {
         RecipesRegger.SERIALIZERS.register(modEventBus);
         ParticleRegger.register(modEventBus);
 
+
         Ascendance.LOGGER.info("Ascendance on-line! Who's onto me?!");
     }
 
@@ -68,6 +69,7 @@ public class Ascendance {
 
     private void setup(final FMLCommonSetupEvent event) {
         ASCServerSideHandler.register();
+        DimensionRegger.register();
     }
 
 

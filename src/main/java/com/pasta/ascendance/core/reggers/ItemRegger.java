@@ -139,4 +139,8 @@ public class ItemRegger {
     public static final RegistryObject<Item> NANITEDAMAGER_ITEM = ITEMS.register("nanitedamager_item", () ->
             new BlockItem(NANITE_DAMAGER.get(), new Item.Properties().tab(ASCTab.instance))
     );
+
+    public static final RegistryObject<Item> COMPACTEDBLOCK_ITEM = ITEMS.register("compactedblock_item", () ->
+            new BlockItem(COMPACTED_BLOCK.get(), new Item.Properties().tab(ASCTab.instance))
+    );
 }

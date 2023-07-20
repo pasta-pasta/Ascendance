@@ -1,0 +1,13 @@
+{
+  "type": "ascendance:compacted_dimension",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "minecraft:badlands",
+      "lakes": false,
+      "features": true,
+      "layers": [],
+      "structure_overrides": "minecraft:ancient_cities"
+    }
+  }
+}
