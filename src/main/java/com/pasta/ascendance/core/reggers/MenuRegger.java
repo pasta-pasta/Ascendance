@@ -1,6 +1,7 @@
 package com.pasta.ascendance.core.reggers;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.containers.NaniteDamagerMenu;
 import com.pasta.ascendance.containers.NanoInjectorMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -17,6 +18,9 @@ public class MenuRegger {
 
     public static final RegistryObject<MenuType<NanoInjectorMenu>> NANOINJECTOR_MENU =
             registerMenuType(NanoInjectorMenu::new, "nanoinjector_menu");
+
+    public static final RegistryObject<MenuType<NaniteDamagerMenu>> NANITEDAMAGER_MENU =
+            registerMenuType(NaniteDamagerMenu::new, "nanitedamager_menu");
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory, String name) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));

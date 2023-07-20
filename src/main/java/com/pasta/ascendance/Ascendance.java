@@ -1,6 +1,7 @@
 package com.pasta.ascendance;
 
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfection;
+import com.pasta.ascendance.containers.NaniteDamagerScreen;
 import com.pasta.ascendance.containers.NanoInjectorScreen;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
 import com.pasta.ascendance.core.subscribers.ASCEventSubscriber;
@@ -81,6 +82,7 @@ public class Ascendance {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         MenuScreens.register(MenuRegger.NANOINJECTOR_MENU.get(), NanoInjectorScreen::new);
+        MenuScreens.register(MenuRegger.NANITEDAMAGER_MENU.get(), NaniteDamagerScreen::new);
     }
 
 

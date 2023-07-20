@@ -7,6 +7,8 @@ import com.pasta.ascendance.items.curios.*;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,6 +22,9 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> SPEAR = ITEMS.register("spear",
             () -> new Spear(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> SPEAR_BASE = ITEMS.register("spear_base",
+            () -> new SwordItem(Tiers.WOOD, 7,  1, new Item.Properties().tab(ASCTab.instance)));
 
     public static final RegistryObject<Item> NANOBREAKER = ITEMS.register("nanobreaker", () ->
             new Nanobreaker(ASCTiers.MERALIUM_TIER, Integer.MAX_VALUE, Integer.MAX_VALUE, new Item.Properties().tab(ASCTab.instance)));
@@ -129,5 +134,9 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> NANITEGLASS_ITEM = ITEMS.register("naniteglass_item", () ->
             new BlockItem(NANITE_GLASS.get(), new Item.Properties().tab(ASCTab.instance))
+    );
+
+    public static final RegistryObject<Item> NANITEDAMAGER_ITEM = ITEMS.register("nanitedamager_item", () ->
+            new BlockItem(NANITE_DAMAGER.get(), new Item.Properties().tab(ASCTab.instance))
     );
 }

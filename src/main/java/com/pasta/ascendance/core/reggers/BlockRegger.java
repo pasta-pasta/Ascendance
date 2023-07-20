@@ -1,6 +1,7 @@
 package com.pasta.ascendance.core.reggers;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.blocks.NaniteDamager;
 import com.pasta.ascendance.blocks.NaniteDoor;
 import com.pasta.ascendance.blocks.colonies.AggressiveColony;
 import com.pasta.ascendance.blocks.colonies.ControllingColony;
@@ -61,6 +62,13 @@ public class BlockRegger {
 
     public static final RegistryObject<Block> NANITE_DOOR = BLOCKS.register("nanite_door", () ->
             new NaniteDoor(Block.Properties.of(Material.STONE)
+                    .strength(0.5f, 6.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))
+    );
+
+    public static final RegistryObject<Block> NANITE_DAMAGER = BLOCKS.register("nanite_damager", () ->
+            new NaniteDamager(Block.Properties.of(Material.STONE)
                     .strength(0.5f, 6.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE))

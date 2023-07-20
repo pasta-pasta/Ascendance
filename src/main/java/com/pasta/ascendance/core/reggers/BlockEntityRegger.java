@@ -1,12 +1,14 @@
 package com.pasta.ascendance.core.reggers;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.blocks.entities.NaniteDamagerEntity;
 import com.pasta.ascendance.blocks.entities.NanoInjectorEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import static com.pasta.ascendance.core.reggers.BlockRegger.NANITE_DAMAGER;
 import static com.pasta.ascendance.core.reggers.BlockRegger.NANOINJECTOR;
 
 public class BlockEntityRegger {
@@ -15,6 +17,9 @@ public class BlockEntityRegger {
 
     public static final RegistryObject<BlockEntityType<NanoInjectorEntity>> NANOINJECTORENTITY = BLOCK_ENTITIES.register("nanoinjector", ()
             -> BlockEntityType.Builder.of(NanoInjectorEntity::new, NANOINJECTOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<NaniteDamagerEntity>> NANITEDAMAGERENTITY = BLOCK_ENTITIES.register("nanitedamager", ()
+            -> BlockEntityType.Builder.of(NaniteDamagerEntity::new, NANITE_DAMAGER.get()).build(null));
 
 
 }

@@ -1,10 +1,7 @@
 package com.pasta.ascendance.core.server;
 
 import com.pasta.ascendance.Ascendance;
-import com.pasta.ascendance.core.server.packets.EnergySyncS2CPacket;
-import com.pasta.ascendance.core.server.packets.FuelSyncS2CPacket;
-import com.pasta.ascendance.core.server.packets.InfectionCapabilityC2SPacket;
-import com.pasta.ascendance.core.server.packets.InfectionCapabilityDataSyncS2CPacket;
+import com.pasta.ascendance.core.server.packets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -36,6 +33,12 @@ public class ASCServerSideHandler {
                 .consumerMainThread(InfectionCapabilityC2SPacket::handle)
                 .add();
 
+        net.messageBuilder(NaniteDamagerC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(NaniteDamagerC2SPacket::new)
+                .encoder(NaniteDamagerC2SPacket::toBytes)
+                .consumerMainThread(NaniteDamagerC2SPacket::handle)
+                .add();
+
         net.messageBuilder(InfectionCapabilityDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(InfectionCapabilityDataSyncS2CPacket::new)
                 .encoder(InfectionCapabilityDataSyncS2CPacket::toBytes)
@@ -46,6 +49,12 @@ public class ASCServerSideHandler {
                 .decoder(EnergySyncS2CPacket::new)
                 .encoder(EnergySyncS2CPacket::toBytes)
                 .consumerMainThread(EnergySyncS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(NaniteDamagerSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(NaniteDamagerSyncS2CPacket::new)
+                .encoder(NaniteDamagerSyncS2CPacket::toBytes)
+                .consumerMainThread(NaniteDamagerSyncS2CPacket::handle)
                 .add();
 
         net.messageBuilder(FuelSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
