@@ -1,6 +1,8 @@
 package com.pasta.ascendance.core.reggers;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.compacted.items.CompactTeleporter;
+import com.pasta.ascendance.compacted.items.SideStateChanger;
 import com.pasta.ascendance.core.ASCTab;
 import com.pasta.ascendance.items.*;
 import com.pasta.ascendance.items.curios.*;
@@ -9,7 +11,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -34,6 +35,9 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> COMPACT_TELEPORTER = ITEMS.register("compact_teleporter",
             () -> new CompactTeleporter(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
+    public static final RegistryObject<Item> SIDECHANGER = ITEMS.register("sidechanger",
+            () -> new SideStateChanger(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
 
     public static final RegistryObject<Item> NANITE_KILLER = ITEMS.register("nanite_killer",
             () -> new NaniteKiller(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));

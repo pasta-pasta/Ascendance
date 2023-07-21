@@ -1,4 +1,4 @@
-package com.pasta.ascendance.compacted;
+package com.pasta.ascendance.compacted.core;
 
 import com.pasta.ascendance.Ascendance;
 import net.minecraft.nbt.CompoundTag;

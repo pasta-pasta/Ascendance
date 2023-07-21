@@ -1,4 +1,4 @@
-package com.pasta.ascendance.compacted;
+package com.pasta.ascendance.compacted.core;
 
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.core.ASCFunctions;
@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.ChunkSource;
 import net.minecraft.world.level.chunk.ChunkStatus;
@@ -59,14 +60,28 @@ public class ASCCompactedFunctions {
         }
     }
 
-    public static BlockPos getValidBoxPos(int id){
+    public static void updateChunks(ServerLevel targetDimension, BlockPos centerPos, int radiusInChunks) {
+        ChunkSource chunkManager = targetDimension.getChunkSource();
+        ChunkPos centerChunkPos = new ChunkPos(centerPos);
+        for (int x = centerChunkPos.x - radiusInChunks; x <= centerChunkPos.x + radiusInChunks; x++) {
+            for (int z = centerChunkPos.z - radiusInChunks; z <= centerChunkPos.z + radiusInChunks; z++) {
+                chunkManager.getChunk(x, z, ChunkStatus.FULL, true);
+                targetDimension.setChunkForced(x, z, true);
+            }
+        }
+    }
+
+    public static BlockPos getValidBoxPos(int id, boolean update){
         int row_num = id/MAX_ROW_ID > 0 ? id/MAX_ROW_ID : 1;
         int column_num = row_num > 1 ? id-(MAX_ROW_ID*(row_num-1)) : id;
         int vert = 72;
 
         Vec3 vec = new Vec3(row_num*32, vert, column_num*32);
         BlockPos pos = new BlockPos(vec.x, vec.y, vec.z);
-        Ascendance.LOGGER.info("Getting valid compact dimension from ID: " + id);
+        if (update){
+            Ascendance.LOGGER.info("Getting valid box pos for ID: " + id);
+        }
+
         return pos;
 
     }

@@ -1,8 +1,10 @@
-package com.pasta.ascendance.compacted;
+package com.pasta.ascendance.compacted.blocks;
 
 
 import com.pasta.ascendance.Ascendance;
-import com.pasta.ascendance.blocks.entities.NaniteDamagerEntity;
+import com.pasta.ascendance.compacted.core.ASCCompactedFunctions;
+import com.pasta.ascendance.compacted.blocks.entities.CompactedBlockEntity;
+import com.pasta.ascendance.compacted.core.IDManager;
 import com.pasta.ascendance.core.reggers.BlockEntityRegger;
 import com.pasta.ascendance.core.reggers.BlockRegger;
 import com.pasta.ascendance.core.reggers.DimensionRegger;
@@ -10,10 +12,8 @@ import com.pasta.ascendance.core.reggers.ItemRegger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -26,14 +26,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Function;
 
 public class CompactedBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -81,7 +76,7 @@ public class CompactedBlock extends BaseEntityBlock {
 
             Ascendance.LOGGER.info("Creating compact dimension for block at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
             if (compactedWorld != null) {
-                ASCCompactedFunctions.generateCubeBoundaries(compactedWorld, ASCCompactedFunctions.getValidBoxPos(id), BlockRegger.COMPACTED_DIMBLOCK.get());
+                ASCCompactedFunctions.generateCubeBoundaries(compactedWorld, ASCCompactedFunctions.getValidBoxPos(id, true), BlockRegger.COMPACTED_DIMBLOCK.get());
                 Ascendance.LOGGER.info("Compact dimension created successfully!");
             }
             else{
@@ -124,12 +119,13 @@ public class CompactedBlock extends BaseEntityBlock {
                     tag.putDouble("x", player.position().x);
                     tag.putDouble("y", player.position().y);
                     tag.putDouble("z", player.position().z);
+                    tag.putInt("id", compactedBlockEntity.getId());
 
                     ServerLevel serverWorld = (ServerLevel) level;
                     ServerLevel compactedWorld = serverWorld.getServer().getLevel(DimensionRegger.ASCDIM_KEY);
                     ASCCompactedFunctions.preGenerateChunks(compactedWorld, pos, 2);
 
-                    BlockPos tpblockpos = new BlockPos(ASCCompactedFunctions.getValidBoxPos(compactedBlockEntity.getId(compactedBlockEntity)));
+                    BlockPos tpblockpos = new BlockPos(ASCCompactedFunctions.getValidBoxPos(compactedBlockEntity.getId(), true));
                     Vec3 tppos = new Vec3(tpblockpos.getX(), tpblockpos.getY(), tpblockpos.getZ());
 
                     ASCCompactedFunctions.visit(tppos, compactedWorld, player);

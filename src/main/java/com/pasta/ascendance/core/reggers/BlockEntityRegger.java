@@ -3,7 +3,8 @@ package com.pasta.ascendance.core.reggers;
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.blocks.entities.NaniteDamagerEntity;
 import com.pasta.ascendance.blocks.entities.NanoInjectorEntity;
-import com.pasta.ascendance.compacted.CompactedBlockEntity;
+import com.pasta.ascendance.compacted.blocks.entities.CompactedBlockEntity;
+import com.pasta.ascendance.compacted.blocks.entities.CompactedDimBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,6 +24,9 @@ public class BlockEntityRegger {
 
     public static final RegistryObject<BlockEntityType<CompactedBlockEntity>> COMPACTEDBLOCKENTITY = BLOCK_ENTITIES.register("compactedblock", ()
             -> BlockEntityType.Builder.of(CompactedBlockEntity::new, COMPACTED_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<CompactedDimBlockEntity>> COMPACTEDDIMBLOCKENTITY = BLOCK_ENTITIES.register("compacteddimblock", ()
+            -> BlockEntityType.Builder.of(CompactedDimBlockEntity::new, COMPACTED_DIMBLOCK.get()).build(null));
 
 
 }

@@ -1,7 +1,6 @@
 package com.pasta.ascendance;
 
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfection;
-import com.pasta.ascendance.compacted.ASCCompactedFunctions;
 import com.pasta.ascendance.containers.NaniteDamagerScreen;
 import com.pasta.ascendance.containers.NanoInjectorScreen;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
@@ -10,8 +9,6 @@ import com.pasta.ascendance.core.reggers.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
