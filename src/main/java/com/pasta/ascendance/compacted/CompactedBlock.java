@@ -4,14 +4,18 @@ package com.pasta.ascendance.compacted;
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.blocks.entities.NaniteDamagerEntity;
 import com.pasta.ascendance.core.reggers.BlockEntityRegger;
+import com.pasta.ascendance.core.reggers.BlockRegger;
 import com.pasta.ascendance.core.reggers.DimensionRegger;
+import com.pasta.ascendance.core.reggers.ItemRegger;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -37,6 +41,8 @@ public class CompactedBlock extends BaseEntityBlock {
         super(properties);
     }
 
+    private int id;
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
@@ -61,21 +67,21 @@ public class CompactedBlock extends BaseEntityBlock {
     public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (!worldIn.isClientSide()) {
             ServerLevel serverWorld = (ServerLevel) worldIn;
+            IDManager idManager = IDManager.get(serverWorld);
+            this.id = idManager.getNextID();
+            BlockEntity be = worldIn.getBlockEntity(pos);
+            if (be instanceof CompactedBlockEntity){
+                ((CompactedBlockEntity) be).setId((CompactedBlockEntity) be, this.id);
+            }
 
 
-            // Convert the overworld coordinates to compacted dimension coordinates
-            int compactedX = pos.getX() * 16;
-            int compactedY = pos.getY() + 16;
-            int compactedZ = pos.getZ() * 16;
-
-            BlockPos compactedPos = new BlockPos(compactedX, compactedY, compactedZ);
 
             // Make sure we're in the compacted dimension
             ServerLevel compactedWorld = serverWorld.getServer().getLevel(DimensionRegger.ASCDIM_KEY);
 
             Ascendance.LOGGER.info("Creating compact dimension for block at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
             if (compactedWorld != null) {
-                ASCCompactedFunctions.generateCubeBoundaries(compactedWorld, compactedPos, Blocks.BEDROCK);
+                ASCCompactedFunctions.generateCubeBoundaries(compactedWorld, ASCCompactedFunctions.getValidBoxPos(id), BlockRegger.COMPACTED_DIMBLOCK.get());
                 Ascendance.LOGGER.info("Compact dimension created successfully!");
             }
             else{
@@ -85,9 +91,6 @@ public class CompactedBlock extends BaseEntityBlock {
         super.onPlace(state, worldIn, pos, oldState, isMoving);
     }
 
-    public Vec3 getCompactedPos(BlockPos pos){
-          return new Vec3 (pos.getX()*16, pos.getY()+16, pos.getZ()*16);
-    }
 
 
     @Nullable
@@ -113,27 +116,26 @@ public class CompactedBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         if(!level.isClientSide){
             if(level.getBlockEntity(pos) instanceof CompactedBlockEntity compactedBlockEntity){
-                ServerLevel serverWorld = (ServerLevel) level;
-                ServerLevel compactedWorld = serverWorld.getServer().getLevel(DimensionRegger.ASCDIM_KEY);
-                ASCCompactedFunctions.preGenerateChunks(compactedWorld, pos, 2);
+                if(player.getItemInHand(hand).getItem() == ItemRegger.COMPACT_TELEPORTER.get()){
 
-                //thx the AE2 repo for this code
-                PortalInfo portalInfo = new PortalInfo(getCompactedPos(pos), Vec3.ZERO, player.getYRot(),
-                        player.getXRot());
-                player.changeDimension(compactedWorld, new ITeleporter() {
-                    @Override
-                    public Entity placeEntity(Entity entity, ServerLevel currentLevel, ServerLevel destLevel, float yaw,
-                                              Function<Boolean, Entity> repositionEntity) {
-                        return repositionEntity.apply(false);
-                    }
+                    ItemStack teleporter = player.getItemInHand(hand);
 
-                    @Override
-                    public PortalInfo getPortalInfo(Entity entity, ServerLevel destLevel,
-                                                    Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-                        return portalInfo;
-                    }
-                });
+                    CompoundTag tag = teleporter.getOrCreateTag();
+                    tag.putDouble("x", player.position().x);
+                    tag.putDouble("y", player.position().y);
+                    tag.putDouble("z", player.position().z);
+
+                    ServerLevel serverWorld = (ServerLevel) level;
+                    ServerLevel compactedWorld = serverWorld.getServer().getLevel(DimensionRegger.ASCDIM_KEY);
+                    ASCCompactedFunctions.preGenerateChunks(compactedWorld, pos, 2);
+
+                    BlockPos tpblockpos = new BlockPos(ASCCompactedFunctions.getValidBoxPos(compactedBlockEntity.getId(compactedBlockEntity)));
+                    Vec3 tppos = new Vec3(tpblockpos.getX(), tpblockpos.getY(), tpblockpos.getZ());
+
+                    ASCCompactedFunctions.visit(tppos, compactedWorld, player);
+                }
             }
+
         }
 
         return InteractionResult.SUCCESS;

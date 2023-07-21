@@ -9,6 +9,7 @@ import com.pasta.ascendance.blocks.colonies.GuardColony;
 import com.pasta.ascendance.blocks.colonies.NanoColony;
 import com.pasta.ascendance.blocks.NanoInjector;
 import com.pasta.ascendance.compacted.CompactedBlock;
+import com.pasta.ascendance.compacted.CompactedDimBlock;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
@@ -78,6 +79,13 @@ public class BlockRegger {
     public static final RegistryObject<Block> COMPACTED_BLOCK = BLOCKS.register("compacted_block", () ->
             new CompactedBlock(Block.Properties.of(Material.STONE)
                     .strength(5f, 6000000.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))
+    );
+
+    public static final RegistryObject<Block> COMPACTED_DIMBLOCK = BLOCKS.register("compacted_dimblock", () ->
+            new CompactedDimBlock(Block.Properties.of(Material.STONE)
+                    .strength(Float.MAX_VALUE, Float.MAX_VALUE)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE))
     );

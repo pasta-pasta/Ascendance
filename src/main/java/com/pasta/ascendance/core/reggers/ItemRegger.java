@@ -32,6 +32,9 @@ public class ItemRegger {
     public static final RegistryObject<Item> NANITE_EXTRACTOR = ITEMS.register("nanite_extractor",
             () -> new Item(new Item.Properties().tab(ASCTab.instance).stacksTo(1).durability(100)));
 
+    public static final RegistryObject<Item> COMPACT_TELEPORTER = ITEMS.register("compact_teleporter",
+            () -> new CompactTeleporter(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
+
     public static final RegistryObject<Item> NANITE_KILLER = ITEMS.register("nanite_killer",
             () -> new NaniteKiller(new Item.Properties().tab(ASCTab.instance).stacksTo(1)));
 
@@ -142,5 +145,9 @@ public class ItemRegger {
 
     public static final RegistryObject<Item> COMPACTEDBLOCK_ITEM = ITEMS.register("compactedblock_item", () ->
             new BlockItem(COMPACTED_BLOCK.get(), new Item.Properties().tab(ASCTab.instance))
+    );
+
+    public static final RegistryObject<Item> COMPACTEDDIMBLOCK_ITEM = ITEMS.register("compacteddimblock_item", () ->
+            new BlockItem(COMPACTED_DIMBLOCK.get(), new Item.Properties().tab(ASCTab.instance))
     );
 }

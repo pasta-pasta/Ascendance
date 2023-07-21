@@ -1,6 +1,7 @@
 package com.pasta.ascendance;
 
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfection;
+import com.pasta.ascendance.compacted.ASCCompactedFunctions;
 import com.pasta.ascendance.containers.NaniteDamagerScreen;
 import com.pasta.ascendance.containers.NanoInjectorScreen;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
@@ -60,6 +61,7 @@ public class Ascendance {
         MenuRegger.MENUS.register(modEventBus);
         RecipesRegger.SERIALIZERS.register(modEventBus);
         ParticleRegger.register(modEventBus);
+        DimensionRegger.register();
 
 
         Ascendance.LOGGER.info("Ascendance on-line! Who's onto me?!");
@@ -69,7 +71,6 @@ public class Ascendance {
 
     private void setup(final FMLCommonSetupEvent event) {
         ASCServerSideHandler.register();
-        DimensionRegger.register();
     }
 
 

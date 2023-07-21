@@ -1,30 +1,21 @@
 package com.pasta.ascendance.compacted;
 
 import com.pasta.ascendance.Ascendance;
-import com.pasta.ascendance.containers.NaniteDamagerMenu;
 import com.pasta.ascendance.core.reggers.BlockEntityRegger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.Nonnull;
 
 public class CompactedBlockEntity extends BlockEntity {
 
@@ -33,10 +24,36 @@ public class CompactedBlockEntity extends BlockEntity {
 
     public static final Component TITLE = Component.translatable("container."+ Ascendance.MOD_ID+".nanitedamager");
 
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
+    private final ContainerData data;
 
+    private int id;
 
     public CompactedBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegger.COMPACTEDBLOCKENTITY.get(), pos, state);
+        this.data = new ContainerData() {
+            @Override
+            public int get(int pIndex) {
+                return switch (pIndex){
+                    case 0 -> CompactedBlockEntity.this.id;
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int pIndex, int pValue) {
+                switch (pIndex){
+                    case 0 -> CompactedBlockEntity.this.id = pValue;
+                }
+
+            }
+
+            @Override
+            public int getCount() {
+                return 1;
+            }
+        };
 
     }
 
@@ -47,17 +64,28 @@ public class CompactedBlockEntity extends BlockEntity {
 
     }
 
-
-    @Override
-    public void load(CompoundTag nbt) {
-
-        super.load(nbt);
+    public int getId(CompactedBlockEntity entity){
+        return entity.data.get(0);
     }
 
-    @Override
-    protected void saveAdditional(CompoundTag nbt) {
+    public void setId(CompactedBlockEntity entity, int value){
+        entity.data.set(0, value);
+        entity.setChanged();
+    }
 
-        super.saveAdditional(nbt);
+    // Override this method to write your ID to NBT when Minecraft saves the block entity
+    @Override
+    public void saveAdditional(CompoundTag compound) {
+
+        compound.putInt("id", id);
+        super.saveAdditional(compound);
+    }
+
+    // Override this method to read your ID from NBT when Minecraft loads the block entity
+    @Override
+    public void load(CompoundTag compound) {
+        this.id = compound.getInt("id");
+        super.load(compound);
     }
 
     @Override
