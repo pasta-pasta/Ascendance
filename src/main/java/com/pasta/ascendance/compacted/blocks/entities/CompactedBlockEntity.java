@@ -174,7 +174,7 @@ public class CompactedBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag nbt) {
         this.inventory.deserializeNBT(nbt.getCompound("Inventory"));
-        id = nbt.getInt("id");
+        id = nbt.getInt("compactedId");
         CompoundTag directionModesTag = nbt.getCompound("directionModes");
         for (String key : directionModesTag.getAllKeys()) {
             directionModes.put(Direction.valueOf(key), Mode.valueOf(directionModesTag.getString(key)));
@@ -186,7 +186,7 @@ public class CompactedBlockEntity extends BlockEntity {
     @Override
     public void saveAdditional(CompoundTag nbt) {
         nbt.put("Inventory", this.inventory.serializeNBT());
-        nbt.putInt("id", this.id);
+        nbt.putInt("compactedId", this.id);
         CompoundTag directionModesTag = new CompoundTag();
         for (Map.Entry<Direction, Mode> entry : directionModes.entrySet()) {
             directionModesTag.putString(entry.getKey().name(), entry.getValue().name());

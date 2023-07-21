@@ -1,6 +1,7 @@
 package com.pasta.ascendance;
 
 import com.pasta.ascendance.capabilities.nanites.infection.PlayerNaniteInfection;
+import com.pasta.ascendance.compacted.core.ASCCompactedEventSubscriber;
 import com.pasta.ascendance.containers.NaniteDamagerScreen;
 import com.pasta.ascendance.containers.NanoInjectorScreen;
 import com.pasta.ascendance.core.server.ASCServerSideHandler;
@@ -51,6 +52,7 @@ public class Ascendance {
         ItemRegger.ITEMS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ASCEventSubscriber());
+        MinecraftForge.EVENT_BUS.register(new ASCCompactedEventSubscriber());
         BlockRegger.BLOCKS.register(modEventBus);
         FeatureRegger.CONFIGURED_FEATURES.register(modEventBus);
         FeatureRegger.PLACED_FEATURES.register(modEventBus);

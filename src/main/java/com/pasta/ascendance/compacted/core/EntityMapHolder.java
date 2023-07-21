@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class EntityMapHolder extends SavedData {
     private static final String DATA_NAME = "entityMap";
-    private Map<Integer, BlockPos> blockEntityMap = new HashMap<>();
+    private  Map<Integer, BlockPos> blockEntityMap = new HashMap<>();
 
     public void registerBlockEntity(int id, BlockEntity blockEntity) {
         BlockPos pos = blockEntity.getBlockPos();

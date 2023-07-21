@@ -4,6 +4,7 @@ package com.pasta.ascendance.compacted.blocks;
 import com.pasta.ascendance.Ascendance;
 import com.pasta.ascendance.compacted.core.ASCCompactedFunctions;
 import com.pasta.ascendance.compacted.blocks.entities.CompactedBlockEntity;
+import com.pasta.ascendance.compacted.core.EntityMapHolder;
 import com.pasta.ascendance.compacted.core.IDManager;
 import com.pasta.ascendance.core.reggers.BlockEntityRegger;
 import com.pasta.ascendance.core.reggers.BlockRegger;
@@ -63,10 +64,12 @@ public class CompactedBlock extends BaseEntityBlock {
         if (!worldIn.isClientSide()) {
             ServerLevel serverWorld = (ServerLevel) worldIn;
             IDManager idManager = IDManager.get(serverWorld);
+            EntityMapHolder holder = EntityMapHolder.get(serverWorld);
             this.id = idManager.getNextID();
             BlockEntity be = worldIn.getBlockEntity(pos);
-            if (be instanceof CompactedBlockEntity){
-                ((CompactedBlockEntity) be).setId((CompactedBlockEntity) be, this.id);
+            if (be instanceof CompactedBlockEntity bce){
+                bce.setId(bce, this.id);
+                holder.registerBlockEntity(this.id, bce);
             }
 
 
