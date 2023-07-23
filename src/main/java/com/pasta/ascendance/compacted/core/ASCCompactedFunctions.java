@@ -1,9 +1,11 @@
 package com.pasta.ascendance.compacted.core;
 
 import com.pasta.ascendance.Ascendance;
+import com.pasta.ascendance.compacted.blocks.entities.CompactedDimBlockEntity;
 import com.pasta.ascendance.core.ASCFunctions;
 import com.pasta.ascendance.core.reggers.DimensionRegger;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -11,6 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.ChunkSource;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.portal.PortalInfo;
@@ -29,7 +32,9 @@ public class ASCCompactedFunctions {
 
     public static final int MAX_ROW_ID = 1800000;
 
-    public static void generateCubeBoundaries(ServerLevel compactedDim, BlockPos center, Block blockToFill) {
+
+
+    public static void generateCubeBoundaries(ServerLevel compactedDim, BlockPos center, Block blockToFill, int id) {
         // Get the start and end coordinates of the cube
         BlockPos startPos = center.offset(-CUBE_RADIUS, -CUBE_RADIUS, -CUBE_RADIUS);
         BlockPos endPos = center.offset(CUBE_RADIUS, CUBE_RADIUS, CUBE_RADIUS);
@@ -39,12 +44,35 @@ public class ASCCompactedFunctions {
         for (int x = startPos.getX(); x <= endPos.getX(); x++) {
             for (int y = startPos.getY(); y <= endPos.getY(); y++) {
                 for (int z = startPos.getZ(); z <= endPos.getZ(); z++) {
-                    // Check if the block is on the boundary of the cube
-                    if (x == startPos.getX() || x == endPos.getX() ||
-                            y == startPos.getY() || y == endPos.getY() ||
-                            z == startPos.getZ() || z == endPos.getZ()) {
-                        // Set the block at this position to the given block
+                    boolean isBoundaryX = (x == startPos.getX() || x == endPos.getX());
+                    boolean isBoundaryY = (y == startPos.getY() || y == endPos.getY());
+                    boolean isBoundaryZ = (z == startPos.getZ() || z == endPos.getZ());
+
+                    // Exclude corner blocks
+                    boolean isCorner = ((x == startPos.getX() || x == endPos.getX()) &&
+                            (y == startPos.getY() || y == endPos.getY())) ||
+                            ((x == startPos.getX() || x == endPos.getX()) &&
+                                    (z == startPos.getZ() || z == endPos.getZ())) ||
+                            ((z == startPos.getZ() || z == endPos.getZ()) &&
+                                    (y == startPos.getY() || y == endPos.getY()));
+
+                    // Only place a block if it's a boundary block and not a corner block
+                    if ((isBoundaryX || isBoundaryY || isBoundaryZ) && !isCorner) {
                         compactedDim.setBlockAndUpdate(new BlockPos(x, y, z), blockToFill.defaultBlockState());
+                        BlockEntity newBe = compactedDim.getBlockEntity(new BlockPos(x, y, z));
+                        if (newBe instanceof CompactedDimBlockEntity cde) {
+                            cde.setOverworldId(id);
+                            Direction direction;
+                            if (x == startPos.getX()) direction = Direction.WEST;
+                            else if (x == endPos.getX()) direction = Direction.EAST;
+                            else if (y == startPos.getY()) direction = Direction.DOWN;
+                            else if (y == endPos.getY()) direction = Direction.UP;
+                            else if (z == startPos.getZ()) direction = Direction.NORTH;
+                            else direction = Direction.SOUTH;
+                            // Assign a slot ID based on this block's position within the direction's grid
+                            int slotId = direction.get3DDataValue() * 196 + ((y - startPos.getY()) * 14 + (z - startPos.getZ()));
+                            cde.setSlotId(slotId);
+                        }
                     }
                 }
             }

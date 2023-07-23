@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ascendance:block/compacted_block"
+      "model": "ascendance:block/compacted_dimblock"
     }
   }
 }

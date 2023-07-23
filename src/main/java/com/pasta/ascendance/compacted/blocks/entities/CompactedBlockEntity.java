@@ -13,6 +13,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -92,6 +93,39 @@ public class CompactedBlockEntity extends BlockEntity {
         return "Something went wrong!";
     }
 
+    public IItemHandler getInventory(){
+        return this.inventory;
+    }
+
+    public void setItemInSlot(CompactedBlockEntity entity, int slotId, ItemStack stack){
+        SimpleContainer inv = new SimpleContainer(entity.inventory.getSlots());
+        if (canInsertAmountIntoSlot(inv, slotId) && canInsertItemIntoSlot(inv, stack, slotId)){
+
+            if (entity.inventory.getStackInSlot(slotId).isEmpty()){
+                entity.inventory.setStackInSlot(slotId,
+                        new ItemStack(stack.getItem(), entity.inventory.getStackInSlot(slotId).getCount() + 1));
+            }
+            else{
+                entity.inventory.setStackInSlot(slotId,
+                        new ItemStack(entity.inventory.getStackInSlot(slotId).getItem(), entity.inventory.getStackInSlot(slotId).getCount() + 1));
+            }
+            entity.setChanged();
+
+        }
+    }
+
+    public ItemStack getItemInSlot(CompactedBlockEntity entity, int slotId){
+        return entity.inventory.getStackInSlot(slotId);
+    }
+
+    private boolean canInsertItemIntoSlot(SimpleContainer inv, ItemStack itemStack, int index) {
+        return inv.getItem(index).getItem() == itemStack.getItem() || inv.getItem(index).isEmpty();
+    }
+
+    private boolean canInsertAmountIntoSlot(SimpleContainer inv, int index) {
+        return inv.getItem(index).getMaxStackSize() > inv.getItem(index).getCount();
+    }
+
     //EVERYTHING ELSE
 
     public CompactedBlockEntity(BlockPos pos, BlockState state) {
@@ -101,13 +135,22 @@ public class CompactedBlockEntity extends BlockEntity {
             directionModes.put(direction, Mode.BLOCKED);
         }
 
+        Map<Direction, Integer> directionToStartSlotMap = new EnumMap<>(Direction.class);
+        directionToStartSlotMap.put(Direction.DOWN, 0);
+        directionToStartSlotMap.put(Direction.UP, 196);
+        directionToStartSlotMap.put(Direction.NORTH, 2 * 196);
+        directionToStartSlotMap.put(Direction.SOUTH, 3 * 196);
+        directionToStartSlotMap.put(Direction.WEST, 4 * 196);
+        directionToStartSlotMap.put(Direction.EAST, 5 * 196);
+
         for (Direction direction : Direction.values()) {
-            int startSlot = direction.get3DDataValue() * 196;
+            int startSlot = directionToStartSlotMap.get(direction);
             directionWrappedHandlerMap.put(direction, LazyOptional.of(() -> new WrappedHandler(inventory,
                     slot -> slot >= startSlot && slot < startSlot + 196,
-                    (slot, stack) -> directionModes.get(direction) == Mode.INPUT)
+                    (slot, stack) -> directionModes.get(direction) == Mode.BLOCKED)
             ));
         }
+
 
         this.data = new ContainerData() {
             @Override
@@ -174,7 +217,7 @@ public class CompactedBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag nbt) {
         this.inventory.deserializeNBT(nbt.getCompound("Inventory"));
-        id = nbt.getInt("compactedId");
+        this.id = nbt.getInt("compactedId");
         CompoundTag directionModesTag = nbt.getCompound("directionModes");
         for (String key : directionModesTag.getAllKeys()) {
             directionModes.put(Direction.valueOf(key), Mode.valueOf(directionModesTag.getString(key)));

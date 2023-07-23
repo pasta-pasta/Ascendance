@@ -79,7 +79,7 @@ public class CompactedBlock extends BaseEntityBlock {
 
             Ascendance.LOGGER.info("Creating compact dimension for block at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
             if (compactedWorld != null) {
-                ASCCompactedFunctions.generateCubeBoundaries(compactedWorld, ASCCompactedFunctions.getValidBoxPos(id, true), BlockRegger.COMPACTED_DIMBLOCK.get());
+                ASCCompactedFunctions.generateCubeBoundaries(compactedWorld, ASCCompactedFunctions.getValidBoxPos(id, true), BlockRegger.COMPACTED_DIMBLOCK.get(), this.id);
                 Ascendance.LOGGER.info("Compact dimension created successfully!");
             }
             else{
